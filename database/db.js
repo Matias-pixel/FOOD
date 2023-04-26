@@ -4,7 +4,7 @@ const conexion = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: '',
-    database: 'DFOOD'
+    database: 'food'
 });
 
 conexion.connect((error)=>{
@@ -12,7 +12,7 @@ conexion.connect((error)=>{
         console.error('El error al conectar a la bd es: '+error);
         return
     }
-    console.log('Todo correcto!')
+    console.log('Todo correcto! Conectado a la base de datos: Food');
 })
 
 module.exports = conexion;

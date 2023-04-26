@@ -1,0 +1,100 @@
+CREATE TABLE estadoCategoria(
+	id int AUTO_INCREMENT PRIMARY KEY,
+    nombre varchar (50)
+
+);
+
+CREATE TABLE categoria(
+    id int AUTO_INCREMENT PRIMARY KEY,
+    nombre varchar(50),
+    
+    estadoCategoria_id_fk int,
+    FOREIGN KEY(estadoCategoria_id_fk) REFERENCES estadocategoria(id)
+    
+);
+
+CREATE TABLE estadoOrden(
+    id int PRIMARY KEY AUTO_INCREMENT,
+    nombre varchar(50)
+);
+
+CREATE TABLE tipoUsuario(
+    id int AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(50)
+);
+
+CREATE TABLE usuario(
+    id int AUTO_INCREMENT PRIMARY KEY,
+    nombre varchar(30),
+    apellido varchar(30),
+    correo varchar(50),
+    pass varchar(50),
+    
+    tipoUsuario_id_fk int,
+    FOREIGN KEY (tipoUsuario_id_fk) REFERENCES tipousuario(id)
+    
+    );
+
+CREATE TABLE razon(
+    id int AUTO_INCREMENT PRIMARY KEY,
+    nombre varchar (50)
+    );
+
+
+CREATE TABLE orden(
+    id int AUTO_INCREMENT PRIMARY KEY,
+    nombre varchar (50),
+    descripcion varchar(50),
+    fecha date,
+    fechaVencimiento datetime,
+    direccion varchar(70),
+    precio int (20),
+    
+    categoria_id_fk int,
+    estadoorden_id_fk int,
+    usuario_id_fk int,
+    razon_id_fk int,
+    
+    FOREIGN KEY (categoria_id_fk) REFERENCES categoria(id),
+    FOREIGN KEY (estadoorden_id_fk) REFERENCES estadoorden(id),
+    FOREIGN KEY (usuario_id_fk) REFERENCES usuario(id),
+    FOREIGN KEY (razon_id_fk) REFERENCES razon(id)
+    
+);
+    
+
+//INSERT 
+
+INSERT INTO estadocategoria VALUES(null, 'HABILITADA');
+INSERT INTO estadocategoria VALUES(null, 'DESHABILITADA');
+
+
+INSERT INTO categoria VALUES(null, 'MASAS',1);
+INSERT INTO categoria VALUES(null, 'BEBESTIBLE',1);
+INSERT INTO categoria VALUES(null, 'CARNE',1);
+INSERT INTO categoria VALUES(null, 'BEBESTIBLE',1);
+INSERT INTO categoria VALUES(null, 'EMBUTIDOS',1);
+insert into categoria values (null, 'VARIADOS',1);
+
+
+INSERT INTO tipousuario VALUES (null, 'ADMINISTRADOR');
+INSERT INTO tipousuario VALUES (null, 'VENDEDOR');
+INSERT INTO tipousuario VALUES (null, 'COMPRADOR');
+
+INSERT INTO estadoorden VALUES (null, 'DESHABILITADA');
+INSERT INTO estadoorden VALUES (null, 'DISPONIBLE');
+INSERT INTO estadoorden VALUES (null, 'RESERVADA');
+INSERT INTO estadoorden VALUES (null, 'VENDIDA');
+
+
+INSERT INTO usuario VALUES (null, 'Matías', 'Marchant', 'marchant@gmail.com', 'marchant1', 1);
+INSERT INTO usuario VALUES (null, 'Daniel', 'Marchant', 'Daniel@gmail.com', 'marchant2', 2);
+INSERT INTO usuario VALUES (null, 'Raul', 'Marchant', 'Raul@gmail.com', 'marchant3', 3);
+
+INSERT INTO razon VALUES (null, 'Proximo a desechar');
+INSERT INTO razon VALUES (null, 'Devolucion de producto');
+INSERT INTO razon VALUES (null, 'Producto no vendido');
+INSERT INTO razon VALUES (null, 'Otro');
+
+
+INSERT INTO orden values(null,'Bolsa variada', 'Es una bolsa con varios alimentos que no vendimos','2023-04-26', '2017-06-15 09:34:21', 'Corvi sur, pasaje 1',8000,6,2,2,4);
