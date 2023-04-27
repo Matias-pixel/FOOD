@@ -1,6 +1,9 @@
+CREATE DATABASE food;
+
+
 CREATE TABLE estadoCategoria(
-	id int AUTO_INCREMENT PRIMARY KEY,
-    nombre varchar (50)
+    id int AUTO_INCREMENT PRIMARY KEY,
+    nombre varchar(50)
 
 );
 
@@ -65,8 +68,8 @@ CREATE TABLE orden(
 
 //INSERT 
 
-INSERT INTO estadocategoria VALUES(null, 'HABILITADA');
-INSERT INTO estadocategoria VALUES(null, 'DESHABILITADA');
+INSERT INTO estadoCategoria VALUES(null, 'HABILITADA');
+INSERT INTO estadoCategoria VALUES(null, 'DESHABILITADA');
 
 
 INSERT INTO categoria VALUES(null, 'MASAS',1);

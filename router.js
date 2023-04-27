@@ -5,7 +5,7 @@ const conexion = require('./database/db');
 
 //RUTA PARA EL INDEX
 router.get('/', (req,res)=>{
-    res.render('login');
+    res.render('index');
 });
 
 router.get('/login', (req,res)=>{
