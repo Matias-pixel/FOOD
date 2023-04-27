@@ -28,7 +28,7 @@ CREATE TABLE usuario(
     nombre varchar(30),
     apellido varchar(30),
     correo varchar(50),
-    pass varchar(50),
+    pass varchar(255),
     
     tipoUsuario_id_fk int,
     FOREIGN KEY (tipoUsuario_id_fk) REFERENCES tipousuario(id)
