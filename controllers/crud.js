@@ -1,6 +1,8 @@
 const conexion = require('../database/db');
 const bcryptjs = require('bcryptjs');
 
+
+//CREAR USUARIO
 exports.saveUser = async(req, res)=>{
     const nombre = req.body.name;
     const apellido = req.body.apellido;
@@ -30,6 +32,7 @@ exports.saveUser = async(req, res)=>{
     });
 }
 
+//LOGEARSE
 
 exports.login = async(req,res)=>{
     const nombre = req.body.nombre;
@@ -75,3 +78,42 @@ exports.login = async(req,res)=>{
     }
 
 }
+
+//CREAR NUEVA CATEGORIA
+exports.createCategoria = (req, res)=>{
+    const nombre = req.body.nombre;
+    const fk = 1;
+
+    conexion.query('INSERT INTO categoria SET ?',{nombre:nombre, estadoCategoria_id_fk:fk}, (error, results)=>{
+        if(error){
+            console.log(error);
+        }else{
+            res.render('nuevaCategoria',{
+                alert:true,
+                alertTitle: 'Todo correcto',
+                alertMessage: 'Categoria ingresada correctamente!',
+                alertIcon:'succes',
+                showConfirmButton: false,
+                timer: 1500,
+                ruta: 'categoria'
+            })
+        }
+    })
+}
+
+//EDITAR CATEGORIA
+//EDITAR TIPO DE USUARIO
+exports.editarCategoria = (req, res)=>{
+    const id = req.body.id;
+    const nombre = req.body.nombre;
+
+    conexion.query('UPDATE categoria SET ? WHERE id = ?', [{nombre:nombre}, id], (error, results)=>{
+        if(error){
+            throw error;
+        }
+        else{
+            res.redirect('/categoria');
+        }
+    })
+}
+
