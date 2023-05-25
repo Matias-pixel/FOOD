@@ -1,6 +1,3 @@
-CREATE DATABASE food;
-
-
 CREATE TABLE estadoCategoria(
     id int AUTO_INCREMENT PRIMARY KEY,
     nombre varchar(50)
@@ -21,9 +18,22 @@ CREATE TABLE estadoOrden(
     nombre varchar(50)
 );
 
+CREATE TABLE estadoTipoUsuario(
+    id int AUTO_INCREMENT PRIMARY KEY,
+    nombre varchar (50)
+);
+
 CREATE TABLE tipoUsuario(
     id int AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(50)
+    nombre VARCHAR(50),
+    
+   	estadoTipoUsuario_id_fk int,
+    FOREIGN KEY(estadoTipoUsuario_id_fk) REFERENCES estadoTipoUsuario(id)
+);
+
+CREATE TABLE estadoUsuario(
+    id int AUTO_INCREMENT PRIMARY KEY,
+    nombre varchar(50)
 );
 
 CREATE TABLE usuario(
@@ -34,7 +44,9 @@ CREATE TABLE usuario(
     pass varchar(255),
     
     tipoUsuario_id_fk int,
-    FOREIGN KEY (tipoUsuario_id_fk) REFERENCES tipousuario(id)
+    estadoUsuario_id_fk int,
+    FOREIGN KEY (tipoUsuario_id_fk) REFERENCES tipousuario(id),
+    FOREIGN KEY (estadoUsuario_id_fk) REFERENCES estadoUsuario(id)
     
     );
 
@@ -79,20 +91,28 @@ INSERT INTO categoria VALUES(null, 'BEBESTIBLE',1);
 INSERT INTO categoria VALUES(null, 'EMBUTIDOS',1);
 insert into categoria values (null, 'VARIADOS',1);
 
+INSERT INTO estadoTipoUsuario VALUES(null, 'HABILITADO');
+INSERT INTO estadoTipoUsuario VALUES(null, 'DESHABILITADO');
 
-INSERT INTO tipousuario VALUES (null, 'ADMINISTRADOR');
-INSERT INTO tipousuario VALUES (null, 'VENDEDOR');
-INSERT INTO tipousuario VALUES (null, 'COMPRADOR');
+INSERT INTO tipousuario VALUES (null, 'ADMINISTRADOR',1);
+INSERT INTO tipousuario VALUES (null, 'VENDEDOR',1);
+INSERT INTO tipousuario VALUES (null, 'COMPRADOR',1);
+
+
 
 INSERT INTO estadoorden VALUES (null, 'DESHABILITADA');
 INSERT INTO estadoorden VALUES (null, 'DISPONIBLE');
 INSERT INTO estadoorden VALUES (null, 'RESERVADA');
 INSERT INTO estadoorden VALUES (null, 'VENDIDA');
 
+INSERT INTO estadoUsuario VALUES(null, 'HABILITADO');
+INSERT INTO estadoUsuario  VALUES(null, 'DESHABILITADO');
 
-INSERT INTO usuario VALUES (null, 'Matías', 'Marchant', 'marchant@gmail.com', 'marchant1', 1);
-INSERT INTO usuario VALUES (null, 'Daniel', 'Marchant', 'Daniel@gmail.com', 'marchant2', 2);
-INSERT INTO usuario VALUES (null, 'Raul', 'Marchant', 'Raul@gmail.com', 'marchant3', 3);
+INSERT INTO usuario VALUES (null, 'mati', 'Marchant', 'marchant@gmail.com', 'marchant1', 1,1);
+INSERT INTO usuario VALUES (null, 'Daniel', 'Marchant', 'Daniel@gmail.com', 'marchant2', 2,1);
+INSERT INTO usuario VALUES (null, 'Raul', 'Marchant', 'Raul@gmail.com', 'marchant3', 3,1);
+
+
 
 INSERT INTO razon VALUES (null, 'Proximo a desechar');
 INSERT INTO razon VALUES (null, 'Devolucion de producto');
@@ -101,3 +121,5 @@ INSERT INTO razon VALUES (null, 'Otro');
 
 
 INSERT INTO orden values(null,'Bolsa variada', 'Es una bolsa con varios alimentos que no vendimos','2023-04-26', '2017-06-15 09:34:21', 'Corvi sur, pasaje 1',8000,6,2,2,4);
+INSERT INTO orden values(null,'Bolsa variada', 'Es una bolsa con varios alimentos que no vendimos','2023-04-26', '2017-06-15 09:34:21', 'Corvi sur, pasaje 1',8000,6,2,2,4);
+INSERT INTO orden values(null,'Bolsa variada', 'Es una bolsa con varios alimentos que no vendimos','2023-04-26', '2017-06-15 09:34:21', 'Corvi sur, pasaje 1',8000,6,3,2,4);

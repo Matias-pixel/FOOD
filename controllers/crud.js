@@ -3,27 +3,22 @@ const bcryptjs = require('bcryptjs');
 
 
 //CREAR USUARIO
-exports.saveUser = async(req, res)=>{
+exports.saveUser =(req, res) => {
     const nombre = req.body.name;
     const apellido = req.body.apellido;
     const correo = req.body.correo;
     const pass = req.body.password;
     const tipo_user = 3;
-
-    let passwordHaash = await bcryptjs.hash(pass,8);
-
-
-
-    conexion.query('INSERT INTO usuario SET ?', {nombre:nombre, apellido:apellido, correo:correo, pass:passwordHaash, tipoUsuario_id_fk:tipo_user}, async(error, results)=>{
-        if(error){
+    conexion.query('INSERT INTO usuario SET ?', { nombre: nombre, apellido: apellido, correo: correo, pass: passwordHaash, tipoUsuario_id_fk: tipo_user, estadoUsuario_id_fk:1 },(error, results) => {
+        if (error) {
             throw error;
 
-        }else{
-            res.render('registro',{
-                alert:true,
+        } else {
+            res.render('registro', {
+                alert: true,
                 alertTitle: 'Resgistro',
                 alertMessage: 'Registro exitoso!',
-                alertIcon:'success',
+                alertIcon: 'success',
                 showConfirmButton: false,
                 timer: 1500,
                 ruta: ''
@@ -34,65 +29,65 @@ exports.saveUser = async(req, res)=>{
 
 //LOGEARSE
 
-exports.login = async(req,res)=>{
-    const nombre = req.body.nombre;
+exports.login = (req,res)=>{
+
+    const email = req.body.nombre;
     const pass = req.body.password;
 
-    let passwordHaash = await bcryptjs.hash(pass,8);
-
-    if(nombre && pass){
-        conexion.query('SELECT * FROM usuario WHERE nombre = ?', [nombre], async(error, results)=>{
-
-            if(results.length == 0 || !(await bcryptjs.compare(pass, results[0].pass))){
-                res.render('login',{
-                    alert:true,
-                    alertTitle: 'Error',
-                    alertMessage: 'Nombre o contraseña incorrectos!',
-                    alertIcon:'error',
-                    showConfirmButton: true,
-                    timer: false,
-                    ruta: 'login'
-                })
+    if(email && pass){
+        conexion.query('SELECT * FROM usuario WHERE nombre = ? and pass = ? and tipoUsuario_id_fk = 1', [email, pass], (error, results)=>{
+            if(error){
+                console.log('error :>> ', error);
             }else{
-                res.render('login',{
-                    alert:true,
-                    alertTitle: 'Conexion exitosa',
-                    alertMessage: 'Credenciales correctas!',
-                    alertIcon:'succes',
-                    showConfirmButton: false,
-                    timer: 1500,
-                    ruta: 'index'
-                })
+
+
+                if(results.length > 0){
+
+                    res.render('login',{
+                        alert:true,
+                        alertTitle: 'Conexion exitosa',
+                        alertMessage: 'Bienvenido!',
+                        alertIcon:'succes',
+                        showConfirmButton: false,
+                        timer: 1500,
+                        ruta: 'categoria'
+                    })
+                
+                }else{
+
+                    //NO ENTRA
+                    res.render('login',{
+                        alert:true,
+                        alertTitle: 'Error',
+                        alertMessage: 'Nombre o contraseña incorrectos!',
+                        alertIcon:'error',
+                        showConfirmButton: true,
+                        timer: false,
+                        ruta: 'login'
+                    })
+                }
+
+
             }
         })
-    }else{
-        res.render('login',{
-            alert:true,
-            alertTitle: 'Error',
-            alertMessage: 'Ingrese los campos!',
-            alertIcon:'error',
-            showConfirmButton: true,
-            timer: false,
-            ruta: 'login'
-        })
     }
-
 }
 
+
 //CREAR NUEVA CATEGORIA
-exports.createCategoria = (req, res)=>{
+exports.createCategoria = (req, res) => {
     const nombre = req.body.nombre;
     const fk = 1;
 
-    conexion.query('INSERT INTO categoria SET ?',{nombre:nombre, estadoCategoria_id_fk:fk}, (error, results)=>{
-        if(error){
+    conexion.query('INSERT INTO categoria SET ?', { nombre: nombre, estadoCategoria_id_fk: fk }, (error, results) => {
+        if (error) {
             console.log(error);
-        }else{
-            res.render('nuevaCategoria',{
-                alert:true,
+        } else {
+            res.render('nuevaCategoria', {
+                alert: true,
                 alertTitle: 'Todo correcto',
                 alertMessage: 'Categoria ingresada correctamente!',
-                alertIcon:'succes',
+                alertIcon: 'succes',
                 showConfirmButton: false,
                 timer: 1500,
                 ruta: 'categoria'
@@ -101,19 +96,87 @@ exports.createCategoria = (req, res)=>{
     })
 }
 
-//EDITAR CATEGORIA
-//EDITAR TIPO DE USUARIO
-exports.editarCategoria = (req, res)=>{
+
+//EDITAR TIPO DE CATEGORIA
+exports.editarCategoria = (req, res) => {
     const id = req.body.id;
     const nombre = req.body.nombre;
 
-    conexion.query('UPDATE categoria SET ? WHERE id = ?', [{nombre:nombre}, id], (error, results)=>{
-        if(error){
+    conexion.query('UPDATE categoria SET ? WHERE id = ?', [{ nombre: nombre }, id], (error, results) => {
+        if (error) {
             throw error;
         }
-        else{
+        else {
             res.redirect('/categoria');
         }
     })
 }
+
+exports.createUsuario =(req, res) => {
+    const nombre = req.body.nombre;
+    const apellido = req.body.apellido;
+    const correo = req.body.email;
+    const pass = req.body.pass;
+    const tipo = req.body.tipo;
+    conexion.query('SELECT * FROM tipousuario WHERE estadoTipoUsuario_id_fk = 1;', (error, results)=>{
+        if(error){
+            throw error;
+        }else{
+            conexion.query('INSERT INTO usuario SET ?', { nombre: nombre, apellido: apellido, correo: correo, pass: pass, tipoUsuario_id_fk: tipo, estadoUsuario_id_fk:1 },(error, results2) => {
+                if (error) {
+                    throw error;
+                } else {
+                    res.render('nuevoUsuario', {
+                        alert: true,
+                        alertTitle: 'Resgistro',
+                        alertMessage: 'Registro exitoso!',
+                        alertIcon: 'success',
+                        showConfirmButton: false,
+                        timer: 1500,
+                        ruta: 'usuario',
+                        results:results,
+                        results2:results
+                    })
+                }
+            });
+        }
+        
+    });
+    
+}
+
+exports.editarUsuario =(req, res) => {
+    const id = req.body.id;
+    const nombre = req.body.nombre;
+    const apellido = req.body.apellido;
+    const correo = req.body.email;
+    const pass = req.body.pass;
+    const tipo = req.body.tipo;
+    conexion.query('SELECT * FROM tipousuario WHERE estadoTipoUsuario_id_fk = 1;', (error, results)=>{
+        if(error){
+            throw error;
+        }else{
+            conexion.query('UPDATE usuario SET ? WHERE id = ?', [{ nombre: nombre, apellido: apellido, correo: correo, pass: pass, tipoUsuario_id_fk: tipo, estadoUsuario_id_fk:1 },id],(error, results2) => {
+                if (error) {
+                    throw error;
+                } else {
+                    res.render('editarUsuario', {
+                        alert: true,
+                        alertTitle: 'Actualizacion compleada',
+                        alertMessage: 'El usuario ha sido actualizado con exito!',
+                        alertIcon: 'success',
+                        showConfirmButton: false,
+                        timer: 1500,
+                        ruta: 'usuario',
+
+                    })
+                }
+            });
+        }
+        
+    });
+    
+}
+
+
 

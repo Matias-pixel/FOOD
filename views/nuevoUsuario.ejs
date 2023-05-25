@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="custom.css">
+    <title>Nuevo usuario</title>
+</head>
+<body>
+    <nav class="navbar navbar-light bg-primary navbar-expand-lg">
+        <div class="container-fluid">
+          <div>
+            <span class="navbar-brand mb-0 h1">Porduct Rescue</span>
+          </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/">ORDENES</a>
+              </li>
+              <li class="nav-item">
+    
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/categoria">CATEGORIAS</a>
+              </li>
+    
+            </ul>
+          </div>
+        </div>
+        <div>
+    
+          <a class="navbar-brand" href="/login">
+            <img src="usuario.png" style="width: 40px; height: 40px;" alt="">
+          </a>
+        </div>
+      </nav>
+
+      <div class="container mt-4">
+        <div class="card border-secondary">
+            <div class="card-header" id="titlecard">Ingresar nueva categoria</div>
+            <div class="card-body">
+                <form action="/createUsuario" method="POST">
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="nombre" name="nombre"  tabindex='1'>
+                    </div>
+                    <div class="mb-3">
+                        <label for="apellido" class="form-label">Apellido</label>
+                        <input type="text" class="form-control" id="apellido" name="apellido"  tabindex='2'>
+                    </div>
+                    <div class="mb-3">
+                        <label for="correo" class="form-label">Correo Electronico</label>
+                        <input type="email" class="form-control" id="email" name="email"  tabindex='3'>
+                    </div>
+                    <div class="mb-3">
+                        <label for="contraseña" class="form-label">Contraseña</label>
+                        <input type="password" class="form-control" id="pass" name="pass"  tabindex='4'>
+                    </div>
+                    <label for="exampleFormControlInput1" class="form-label">Tipo de Usuario</label>
+                    <select class="form-select form-control-lg" aria-label="Default select example" id="tipo" name="tipo" required>
+                        
+                        <option selected> Seleccione una opción: </option>
+
+
+                        <% results.forEach((tipos)=>{ %>
+                            <option value="<%= tipos.id %>" > <%= tipos.nombre %> </option>
+                        <%})%>
+                    </select>
+                    <BR></BR>
+                    <button type="submit" class="btn btn-info" tabindex="5">Guardar Usuario</button>
+                    <a href="/usuario" class="btn btn-info" >Cancelar</a>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--cdn bootstrap js-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <!--cdn alertas js-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.5/dist/sweetalert2.all.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <% if(typeof alert != "undefined"){ %>
+        <script>
+            Swal.fire({
+                title: '<%= alertTitle%>',
+                text: '<%= alertMessage%>',
+                icon: '<%= alertIcon%>',
+                showConfirmButton: <%= showConfirmButton%> ,
+                timer: <%= timer%>
+            }).then(()=>{
+                window.location='/<%= ruta%>'
+            })
+        </script>
+    <% } %>
+
+
+
+
+
+
+
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+</body>
+</html>

@@ -10,28 +10,26 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     
   <link rel="stylesheet" href="custom.css">
-  <title>Productos</title>
+  <title>Ordenes</title>
 </head>
 
-<body>
+<body style="background-color: #f5f5f5;">
   <nav class="navbar navbar-light bg-primary navbar-expand-lg">
     <div class="container-fluid">
-      <h1>PRODUCT RESCUE</h1>
+      <div>
+        <span class="navbar-brand mb-0 h1">Porduct Rescue</span>
+      </div>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/">Inicio</a>
-          </li>
-          <li class="nav-item">
 
-          </li>
           <li class="nav-item">
-            <a class="nav-link" href="/categoria">CATEGORIAS</a>
+            <a class="nav-link active" aria-current="page" href="/">ORDENES</a>
           </li>
+
 
         </ul>
       </div>
@@ -39,7 +37,7 @@
     <div>
 
       <a class="navbar-brand" href="/login">
-        <img src="usuario.png" style="width: 40px; height: 40px;" alt="">
+        Iniciar Sesión
       </a>
     </div>
   </nav>
@@ -70,6 +68,19 @@
       <!--Columna central-->
       <main class="col-12 col-lg-8">
         <h3 class="pt-5">Productos</h3>
+        <form action="/indec">
+          <div class="container">
+              <div class="row mb-3">
+                  <div class="col-md-11">
+                      <input class="form-control" type="text" placeholder="Buscar producto..." id="names" name="names">
+                  </div>
+                  <div class="col-md-1">
+                      <button class="btn btn-primary rounded-0 text-white" type="submit">BUSCAR</button>
+                  </div>
+              </div>
+          </div>
+        </form>
+      </form>
 
         <div class="container">
 
@@ -94,22 +105,19 @@
                     <p class="card-text">Estado: <%= orden.estadoNombre %>
                     </p>
                     <% if(orden.precio==0 ) {%>
-                      <p class="card-text">Gratis</p>
-                      <%}%>
-
-                        <% if(orden.precio !=0 ) {%>
-                          <p class="card-text">Precio: $<%= orden.precio %>
-                          </p>
-                          <%}%>
-                            <!--BOTON-->
-                            <% if(orden.estadoNombre !='DISPONIBLE' ) {%>
-                              <a href="#" id="myLink" style="width: 100%;"
-                                class="btn btn-danger  rounded-3 btn-block text-white">No disponible</a>
-                              <%}%>
-                                <% if(orden.estadoNombre==='DISPONIBLE' ) {%>
-                                  <a href="#" style="width: 100%;"
-                                    class="btn btn-primary  rounded-3 btn-block text-white">Ver Evento</a>
-                                  <%}%>
+                    <p class="card-text">Gratis</p>
+                    <%}%>
+                    <% if(orden.precio !=0 ) {%>
+                    <p class="card-text">Precio: $<%= orden.precio %>
+                    </p>
+                    <%}%>
+                    <!--BOTON-->
+                    <% if(orden.estadoNombre !='DISPONIBLE' ) {%>
+                    <a href="#" id="myLink" style="width: 100%;"class="btn btn-danger  rounded-3 btn-block text-white">No disponible</a>
+                    <%}%>
+                    <% if(orden.estadoNombre==='DISPONIBLE' ) {%>
+                    <a href="/detalle/<%=orden.id%>" style="width: 100%;" class="btn btn-primary  rounded-3 btn-block text-white">Ver Evento</a>
+                    <%}%>
                   </div>
 
                 </div>
