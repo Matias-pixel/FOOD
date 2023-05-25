@@ -84,9 +84,7 @@
                               <a href="/editarCategoria/<%= categoria.id %>" class="btn btn-info"><span class="material-symbols-outlined">
                                 border_color
                                 </span></a>
-                              <a href="deshabilitarCategoria/<%= categoria.id %>" class="btn btn-danger"><span class="material-symbols-outlined">
-                                delete
-                                </span></a>
+                                <a onclick="confirmar(<%= categoria.id %>, '<%= categoria.nombre %>')" class="btn btn-danger"><span class="material-symbols-outlined">delete</span></a>
                           </td>
   
                       </tr>
@@ -100,6 +98,8 @@
       <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
       <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
       <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.5/dist/sweetalert2.all.min.js"></script>
 
       <!--SCRIPT DEL DATATABLE-->
       <script>
@@ -163,6 +163,28 @@
 
         }
     </script>
+
+<script>
+  function confirmar(id, nombre) {
+      Swal.fire({
+          title: 'Atencion!',
+          text: "¿Estas seguro de querer eliminar la categoria " + nombre + "?",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          cancelButtonText: 'Cancelar',
+          confirmButtonText: 'Si, eliminar!'
+      }).then((result) => {
+
+          if (result.isConfirmed) {
+              window.location = '/deshabilitarCategoria/' + id;
+
+          }
+
+      })
+  }
+</script>
     
 </body>
 </html>

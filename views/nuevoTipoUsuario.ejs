@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="custom.css">
+    <title>Nuevo tipo de usuario</title>
+</head>
+<body>
+
+    <nav class="navbar navbar-light bg-primary navbar-expand-lg">
+        <div class="container-fluid">
+          <div>
+            <span class="navbar-brand mb-0 h1">Porduct Rescue</span>
+          </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link active" href="/usuario">USUARIOS</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active"  href="/categoria">CATEGORIAS</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" href="/tipoUsuario">TIPOS DE USUARIO</a>
+              </li>
+    
+            </ul>
+          </div>
+        </div>
+        <div>
+    
+          <a class="navbar-brand" href="/login">
+            CERRAR SESIÓN
+          </a>
+        </div>
+      </nav>
+    </div>
+  </nav>
+
+
+      <!--INICIO DE LISTA CATEGORIAS-->
+
+      <div class="container mt-4">
+        <div class="card border-secondary">
+            <div class="card-header" id="titlecard">Ingresar nuevo tipo de usuario</div>
+            <div class="card-body">
+                <form action="/createTipoUsuario" method="POST">
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="nombre" name="nombre"  tabindex='1'>
+                    </div>
+                    <button type="submit" class="btn btn-info" tabindex="5">Guardar tipo de usuario</button>
+                    <a href="/categoria" class="btn btn-info" >Cancelar</a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <% if(typeof alert != "undefined"){ %>
+        <script>
+            Swal.fire({
+                title: '<%= alertTitle%>',
+                text: '<%= alertMessage%>',
+                icon: '<%= alertIcon%>',
+                showConfirmButton: <%= showConfirmButton%> ,
+                timer: <%= timer%>
+            }).then(()=>{
+                window.location='/<%= ruta%>'
+            })
+        </script>
+    <% } %>
+
+</body>
+</html>

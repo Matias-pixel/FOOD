@@ -147,7 +147,7 @@ router.get('/nuevoUsuario',(req,res)=>{
 //RUTA PARA VER TIPOS DE USUARIOS
 router.get('/tipoUsuario', (req,res)=>{
 
-    conexion.query('SELECT usuario.id, usuario.nombre, usuario.apellido, usuario.correo, usuario.pass, tipousuario.nombre AS "tiponombre"FROM usuario INNER JOIN tipousuario on usuario.tipoUsuario_id_fk = tipousuario.id  WHERE usuario.estadoUsuario_id_fk = 1',(error, results)=>{
+    conexion.query('SELECT * FROM tipoUsuario where estadoTipoUsuario_id_fk = 1',(error, results)=>{
         if(error){
             throw error;
         }else{
@@ -167,9 +167,102 @@ router.get('/editarUsuario/:id', (req, res)=>{
                 if(error){
                     throw error;
                 }else{
-                    res.render('editarUsuario',{results:result[0],tipos:tipox})
+                    res.render('editarUsuario',{results:result[0],tipox:tipox})
                 }
             })
+        }
+    })
+})
+//RUTA PARA ELIMINAR USUARIO
+router.get('/deleteUsuario/:id', (req, res)=>{
+    const id = req.params.id;
+    conexion.query('UPDATE usuario SET estadoUsuario_id_fk = 2 WHERE id = ? ', [id], (error)=>{
+        if(error){
+            throw error;
+        }else{
+            res.redirect('/usuario')
+        }
+    })
+})
+
+//RUTA PARA LISTAR USUARIOS DESHABILITADOS
+
+router.get('/UsuarioDes', (req,res)=>{
+
+    conexion.query('SELECT * FROM usuario where estadoUsuario_id_fk = 2',(error, results)=>{
+        if(error){
+            throw error;
+        }else{
+            res.render('usuariosDes', {results:results});
+        }
+    })
+})
+//RUTA PARA HABILITAR USUSARIO
+
+router.get('/HabilitarUsuario/:id', (req, res)=>{
+    const id = req.params.id;
+    conexion.query('UPDATE usuario SET estadoUsuario_id_fk = 1 WHERE id = ? ', [id], (error)=>{
+        if(error){
+            throw error;
+        }else{
+            res.redirect('/usuario')
+        }
+    })
+})
+
+//RUTA PARA CREAR TIPO DE USUARIO
+
+router.get('/nuevoTipoUsuario', (req,res)=>{
+    res.render('nuevoTipoUsuario');
+});
+
+//RUTA PARA EDITAR TIPO DE USUARIO 
+
+router.get('/editarTipoUsuario/:id', (req, res)=>{
+
+    const id = req.params.id;
+    conexion.query('SELECT * FROM tipoUsuario WHERE id = ?', [id], (error, results)=>{
+        if(error){
+            throw error;
+        }else{
+            res.render('editarTipoUsuario', {tipo:results[0]});
+        }
+    })
+})
+
+//RUTA PARA LISTAR TU DESHABILITADAS
+
+router.get('/tipoUsuarioDes', (req,res)=>{
+
+    conexion.query('SELECT * FROM tipoUsuario WHERE estadoTipoUsuario_id_fk = 2;',(error, results)=>{
+        if(error){
+            throw error;
+        }else{
+            res.render('tipoUsuarioDes', {results:results});
+        }
+    })
+})
+
+//RUTA PARA ELIMINAR TIPO DE USUARIO
+router.get('/deleteTipoUsuario/:id', (req, res)=>{
+    const id = req.params.id;
+    conexion.query('UPDATE tipousuario SET estadoTipoUsuario_id_fk = 2 WHERE id = ? ', [id], (error)=>{
+        if(error){
+            throw error;
+        }else{
+            res.redirect('/tipoUsuario')
+        }
+    })
+})
+
+//RUTA PARA HABILITAR TIPO DE USUARIO
+router.get('/habilitarTipoUsuario/:id', (req, res)=>{
+    const id = req.params.id;
+    conexion.query('UPDATE tipoUsuario SET estadoTipoUsuario_id_fk = 1 WHERE id = ? ', [id], (error)=>{
+        if(error){
+            throw error;
+        }else{
+            res.redirect('/tipoUsuario')
         }
     })
 })
@@ -189,7 +282,9 @@ router.post('/login', crud.login);
 router.post('/createCategoria', crud.createCategoria);
 router.post('/editarCategoria', crud.editarCategoria);
 router.post('/createUsuario',crud.createUsuario);
-router.post('/editarUsuario',crud.editarUsuario);
+router.post('/createTipoUsuario',crud.createTipoUsuario);
+router.post('/editarTipoUsuario',crud.editarTipoUsuario);
+router.post('/editarUsuario', crud.editarUsuario);
 
 //IMPORTAR DE CRUD
 

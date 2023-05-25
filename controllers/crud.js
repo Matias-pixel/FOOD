@@ -101,15 +101,32 @@ exports.createCategoria = (req, res) => {
 exports.editarCategoria = (req, res) => {
     const id = req.body.id;
     const nombre = req.body.nombre;
-
-    conexion.query('UPDATE categoria SET ? WHERE id = ?', [{ nombre: nombre }, id], (error, results) => {
-        if (error) {
+    conexion.query('SELECT * FROM categoria WHERE estadoCategoria_id_fk = 1', (error, results2)=>{
+        if(error){
             throw error;
-        }
-        else {
-            res.redirect('/categoria');
+        }else{
+            conexion.query('UPDATE categoria SET ? WHERE id = ?', [{ nombre: nombre }, id], (error, results) => {
+                if (error) {
+                    throw error;
+                }
+                else {
+                    res.render('editarCategoria',{
+                        alert:true,
+                        alertTitle: 'Todo correcto',
+                        alertMessage: 'Categoria actualizada correctamente!',
+                        alertIcon:'succes',
+                        showConfirmButton: false,
+                        timer: 1500,
+                        ruta: 'categoria',
+                        tipo:results,
+                        results2: results2
+                        
+                    })
+                }
+            })
         }
     })
+    
 }
 
 exports.createUsuario =(req, res) => {
@@ -152,11 +169,11 @@ exports.editarUsuario =(req, res) => {
     const correo = req.body.email;
     const pass = req.body.pass;
     const tipo = req.body.tipo;
-    conexion.query('SELECT * FROM tipousuario WHERE estadoTipoUsuario_id_fk = 1;', (error, results)=>{
+    conexion.query('SELECT * FROM tipousuario WHERE estadoTipoUsuario_id_fk = 1;', (error, tipox)=>{
         if(error){
             throw error;
         }else{
-            conexion.query('UPDATE usuario SET ? WHERE id = ?', [{ nombre: nombre, apellido: apellido, correo: correo, pass: pass, tipoUsuario_id_fk: tipo, estadoUsuario_id_fk:1 },id],(error, results2) => {
+            conexion.query('UPDATE usuario SET ? WHERE id = ?', [{ nombre: nombre, apellido: apellido, correo: correo, pass: pass, tipoUsuario_id_fk: tipo, estadoUsuario_id_fk:1 },id],(error, results) => {
                 if (error) {
                     throw error;
                 } else {
@@ -168,6 +185,8 @@ exports.editarUsuario =(req, res) => {
                         showConfirmButton: false,
                         timer: 1500,
                         ruta: 'usuario',
+                        tipox:tipox,
+                        results:results
 
                     })
                 }
@@ -177,6 +196,61 @@ exports.editarUsuario =(req, res) => {
     });
     
 }
+
+exports.createTipoUsuario = (req, res) => {
+    const nombre = req.body.nombre;
+    const fk = 1;
+
+    conexion.query('INSERT INTO tipoUsuario SET ?', { nombre: nombre, estadoTipoUsuario_id_fk: fk }, (error, results) => {
+        if (error) {
+            console.log(error);
+        } else {
+            res.render('nuevaCategoria', {
+                alert: true,
+                alertTitle: 'Todo correcto',
+                alertMessage: 'Tipo de usuario creado correctamente!',
+                alertIcon: 'succes',
+                showConfirmButton: false,
+                timer: 1500,
+                ruta: 'tipoUsuario',
+                results:results
+            })
+        }
+    })
+}
+
+
+exports.editarTipoUsuario = (req, res) => {
+    const id = req.body.id;
+    const nombre = req.body.nombre;
+    conexion.query('SELECT * FROM tipoUsuario WHERE estadoTipoUsuario_id_fk = 1', (error, results2)=>{
+        if(error){
+            throw error;
+        }else{
+            conexion.query('UPDATE tipoUsuario SET ? WHERE id = ?', [{ nombre: nombre }, id], (error, results) => {
+                if (error) {
+                    throw error;
+                }
+                else {
+                    res.render('editarTipoUsuario',{
+                        alert:true,
+                        alertTitle: 'Todo correcto',
+                        alertMessage: 'Tipo de usuario actualizado correctamente!',
+                        alertIcon:'succes',
+                        showConfirmButton: false,
+                        timer: 1500,
+                        ruta: 'tipoUsuario',
+                        tipo:results,
+                        results2: results2
+                        
+                    })
+                }
+            })
+        }
+    })
+    
+}
+
 
 
 
