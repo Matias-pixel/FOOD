@@ -58,7 +58,8 @@
                         <input id="id" name="id" value="<%= tipo.id %>" hidden>
                         <div class="mb-3">
                             <label for="user" class="form-label">Nombre</label>
-                            <input type="text" class="form-control" id="nombre" name="nombre" value="<%= tipo.nombre %>" tabindex='1'>
+                            <input type="text" class="form-control" id="nombre" name="nombre" value="<%= tipo.nombre %>" tabindex='1' oninput="validarTexto(this)" required>
+                            <span id="error" style="color: red;"></span>
                         </div>
                         <button type="submit" class="btn btn-primary" id="submit-btn" tabindex="5">Guardar</button>
                         <a href="/categoria" class="btn btn-secondary" id="cancel-btn">Cancelar</a>
@@ -67,6 +68,19 @@
             </div>
         </div>
     <% } %>
+    <script>
+      function validarTexto(input) {
+        var texto = input.value;
+        var regex = /^[a-zA-ZáéíóúÁÉÍÓÚ\s]*$/; // Expresión regular para letras, espacios y letras con acento
+  
+        if (!regex.test(texto)) {
+          document.getElementById("error").innerHTML = "Ingrese solo texto";
+          input.value = texto.replace(/[^a-zA-ZáéíóúÁÉÍÓÚ\s]/g, ''); // Eliminar caracteres no permitidos
+        } else {
+          document.getElementById("error").innerHTML = "";
+        }
+      }
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <% if(typeof alert != "undefined"){ %>
         <script>

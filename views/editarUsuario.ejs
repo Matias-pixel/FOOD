@@ -58,23 +58,28 @@
                         <input id="id" name="id" value="<%= results.id %>" hidden>
                         <div class="mb-3">
                             <label for="nombre" class="form-label">Nombre</label>
-                            <input type="text" class="form-control" id="nombre" name="nombre" value="<%= results.nombre %>" tabindex='1'>
+                            <input type="text" class="form-control" id="nombre" name="nombre" value="<%= results.nombre %>" oninput="validarTexto(this)" tabindex='1' required>
+                            <span id="error" style="color: red;"></span>
                         </div>
                         <div class="mb-3">
                             <label for="apellido" class="form-label">Apellido</label>
-                            <input type="text" class="form-control" id="apellido" name="apellido" value="<%= results.apellido %>" tabindex='2'>
+                            <input type="text" class="form-control" id="apellido" name="apellido" value="<%= results.apellido %>" oninput="validarTexto(this)" tabindex='2' required>
+                            <span id="error" style="color: red;"></span>
                         </div>
                         <div class="mb-3">
                             <label for="correo" class="form-label">Correo Electronico</label>
-                            <input type="email" class="form-control" id="email" name="email" value="<%= results.correo %>" tabindex='3'>
+                            <input type="email" class="form-control" id="email" name="email" value="<%= results.correo %>" tabindex='3' required>
+                            <span id="error" style="color: red;"></span>
                         </div>
                         <div class="mb-3">
                             <label for="contraseña" class="form-label">Contraseña</label>
-                            <input type="password" class="form-control" id="pass" name="pass" value="<%= results.pass %>"  tabindex='4'>
+                            <input type="password" class="form-control" id="pass" name="pass" value="<%= results.pass %>"   tabindex='4' required>
+                            
                         </div>
 
                         <label for="exampleFormControlInput1" class="form-label">Tipo de Usuario</label>
                         <select class="form-select form-control-lg" aria-label="Default select example" id="tipo" name="tipo" required>
+                          
                             
                             <option selected> Seleccione una opción: </option>
                             <% tipox.forEach((tipos)=>{ %>
@@ -91,6 +96,19 @@
             </div>
         </div>
     <% } %>
+    <script>
+      function validarTexto(input) {
+        var texto = input.value;
+        var regex = /^[a-zA-ZáéíóúÁÉÍÓÚ\s]*$/; // Expresión regular para letras, espacios y letras con acento
+  
+        if (!regex.test(texto)) {
+          document.getElementById("error").innerHTML = "Ingrese solo texto";
+          input.value = texto.replace(/[^a-zA-ZáéíóúÁÉÍÓÚ\s]/g, ''); // Eliminar caracteres no permitidos
+        } else {
+          document.getElementById("error").innerHTML = "";
+        }
+      }
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.5/dist/sweetalert2.all.min.js"></script>
     <% if(typeof alert != "undefined"){ %>
         <script>

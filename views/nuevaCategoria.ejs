@@ -53,7 +53,8 @@
                 <form action="/createCategoria" method="POST">
                     <div class="mb-3">
                         <label for="nombre" class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="nombre" name="nombre"  tabindex='1'>
+                        <input type="text" class="form-control" id="nombre" name="nombre" oninput="validarTexto(this)" tabindex='1'>
+                        <span id="error" style="color: red;"></span>
                     </div>
                     <button type="submit" class="btn btn-info" tabindex="5">Guardar categoria</button>
                     <a href="/categoria" class="btn btn-info" >Cancelar</a>
@@ -63,16 +64,19 @@
     </div>
 
 
-
-
-
-
-
-
-
-
-
-
+    <script>
+      function validarTexto(input) {
+        var texto = input.value;
+        var regex = /^[a-zA-Z\s]*$/; // Expresión regular para letras y espacios
+  
+        if (!regex.test(texto)) {
+          document.getElementById("error").innerHTML = "Ingrese solo texto";
+          input.value = texto.replace(/[^a-zA-Z\s]/g, ''); // Eliminar caracteres no permitidos
+        } else {
+          document.getElementById("error").innerHTML = "";
+        }
+      }
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <% if(typeof alert != "undefined"){ %>
         <script>

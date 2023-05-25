@@ -9,7 +9,7 @@ exports.saveUser =(req, res) => {
     const correo = req.body.correo;
     const pass = req.body.password;
     const tipo_user = 3;
-    conexion.query('INSERT INTO usuario SET ?', { nombre: nombre, apellido: apellido, correo: correo, pass: passwordHaash, tipoUsuario_id_fk: tipo_user, estadoUsuario_id_fk:1 },(error, results) => {
+    conexion.query('INSERT INTO usuario SET ?', { nombre: nombre, apellido: apellido, correo: correo, pass: pass, tipoUsuario_id_fk: tipo_user, estadoUsuario_id_fk:1 },(error, results) => {
         if (error) {
             throw error;
 

@@ -14,6 +14,23 @@ router.get('/', (req,res)=>{
     })
 });
 
+router.get('/indec',  (req, res)=>{
+
+    const names = req.query.names;
+    
+    conexion.query('SELECT orden.id, orden.nombre, orden.descripcion, orden.fecha, orden.direccion,orden.fechaVencimiento, orden.precio, estadoorden.nombre AS estadoNombre, usuario.nombre AS usuarioNombre, razon.nombre AS razonNombre FROM orden INNER JOIN estadoorden ON orden.estadoorden_id_fk = estadoorden.id INNER JOIN usuario ON orden.usuario_id_fk = usuario.id INNER JOIN razon ON orden.razon_id_fk = razon.id WHERE estadoorden.id != 1 AND orden.nombre = ? ORDER BY orden.fecha ASC;',[names], (error, results)=>{
+
+        if (error){
+            console.log(' NADADANDNANDANANDADNADNANDNA');
+            throw error;            
+        }else{
+            res.render('index', {results: results});
+            console.log('results :>> ', results);
+        }
+    });
+
+})
+
 
 
 
@@ -82,7 +99,7 @@ router.get('/editarCategoria/:id', (req, res)=>{
             res.render('editarCategoria', {tipo:results[0]});
         }
     })
-})
+}) 
 
 //RUTA PARA DESHABILITAR CATEGORIA
 router.get('/deshabilitarCategoria/:id', (req, res)=>{

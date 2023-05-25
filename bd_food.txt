@@ -121,5 +121,5 @@ INSERT INTO razon VALUES (null, 'Otro');
 
 
 INSERT INTO orden values(null,'Bolsa variada', 'Es una bolsa con varios alimentos que no vendimos','2023-04-26', '2017-06-15 09:34:21', 'Corvi sur, pasaje 1',8000,6,2,2,4);
-INSERT INTO orden values(null,'Bolsa variada', 'Es una bolsa con varios alimentos que no vendimos','2023-04-26', '2017-06-15 09:34:21', 'Corvi sur, pasaje 1',8000,6,2,2,4);
-INSERT INTO orden values(null,'Bolsa variada', 'Es una bolsa con varios alimentos que no vendimos','2023-04-26', '2017-06-15 09:34:21', 'Corvi sur, pasaje 1',8000,6,3,2,4);
+INSERT INTO orden values(null,'Media lunas variada', 'Es una bolsa con varios alimentos que no vendimos','2023-04-26', '2017-06-15 09:34:21', 'Corvi Oeste, pasaje 1',3000,6,2,2,4);
+INSERT INTO orden values(null,'Donas', 'No vinieron por el pedido','2023-04-26', '2017-06-15 09:34:21', 'Corvi Norte, pasaje 1',0,6,3,2,4);
