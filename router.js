@@ -5,18 +5,23 @@ const conexion = require('./database/db');
 
 //RUTA PARA EL INDEX
 router.get('/', (req,res)=>{
-    res.render('index');
+    conexion.query('SELECT orden.id, orden.nombre, orden.descripcion, orden.fecha, orden.direccion,orden.fechaVencimiento, orden.precio, estadoorden.nombre AS estadoNombre, usuario.nombre AS usuarioNombre, razon.nombre AS razonNombre FROM orden INNER JOIN estadoorden ON orden.estadoorden_id_fk = estadoorden.id INNER JOIN usuario ON orden.usuario_id_fk = usuario.id INNER JOIN razon ON orden.razon_id_fk = razon.id WHERE estadoorden.id != 1 ORDER BY orden.fecha ASC;', (error, results)=>{
+        if(error){
+            throw error;
+        }else{
+            res.render('index', {results:results})
+        }
+    })
 });
+
+
+
 
 router.get('/login', (req,res)=>{
     res.render('login');
 });
 
-//RUTA PARA INDEX
 
-router.get('/index', (req,res)=>{
-    res.render('index');
-});
 
 
 
@@ -100,6 +105,12 @@ router.get('/habilitarCategoria/:id', (req, res)=>{
         }
     })
 })
+
+//RUTA PARA ADMIN
+
+router.get('/admin', (req,res)=>{
+    res.render('admin');
+});
 
 
 

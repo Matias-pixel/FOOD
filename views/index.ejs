@@ -5,15 +5,18 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    
+  <link rel="stylesheet" href="custom.css">
   <title>Productos</title>
 </head>
 
 <body>
-  <nav class="navbar navbar-light navbar-expand-lg" style="background-color: #e3f2fd;">
+  <nav class="navbar navbar-light bg-primary navbar-expand-lg">
     <div class="container-fluid">
-      <h1 class="navbar-brand">Product Rescue</h1>
+      <h1>PRODUCT RESCUE</h1>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -69,66 +72,63 @@
         <h3 class="pt-5">Productos</h3>
 
         <div class="container">
+
           <div class="row g-3">
-            <div class="col-12 col-md-6 col-lg-4">
-              <div class="card">
-                <img src="st.png" class="card-img-top" id="imgcard" alt="A Street in Europe">
-                <div class="card-body">
-                  <input hidden id="idevent" name="idevent" value="">
-                  <h5 class="card-title">Cafe starbucks</h5>
-                  <p class="card-text">Fecha: 27-04-2023</p>
-                  <p class="card-text">Fecha para que lo desechen: 27-04-2023 18:00</p>
-                  <p class="card-text">Direccion: Estado 235, Rancagua, O'Higgins </p>
-                  <p class="card-text">Estado: Disponible </p>
-                  <p class="card-text">Precio: $3500</p>
-                  <a href="#" style="width: 100%;" class="btn btn-primary  rounded-0 btn-block text-white">Reservar</a>
+            <% results.forEach((orden)=> { %>
+              <div class="col-12 col-md-6 col-lg-4">
+
+                <div class="card rounded-3">
+
+                  <img src="st.png" class="card-img-top" id="imgcard" alt="A Street in Europe">
+                  <div class="card-body">
+                    <input hidden id="ordenId" name="ordenId" value="<%= orden.id %>">
+                    <h5 class="card-title">
+                      <%= orden.nombre%>
+                    </h5>
+                    <p class="card-text" id="datecut">Fecha: <%= orden.fecha.toLocaleDateString() %>
+                    </p>
+                    <p class="card-text">Fecha para que lo desechen: <%= orden.fechaVencimiento.toLocaleDateString() %>
+                    </p>
+                    <p class="card-text">Direccion: <%= orden.direccion %>
+                    </p>
+                    <p class="card-text">Estado: <%= orden.estadoNombre %>
+                    </p>
+                    <% if(orden.precio==0 ) {%>
+                      <p class="card-text">Gratis</p>
+                      <%}%>
+
+                        <% if(orden.precio !=0 ) {%>
+                          <p class="card-text">Precio: $<%= orden.precio %>
+                          </p>
+                          <%}%>
+                            <!--BOTON-->
+                            <% if(orden.estadoNombre !='DISPONIBLE' ) {%>
+                              <a href="#" id="myLink" style="width: 100%;"
+                                class="btn btn-danger  rounded-3 btn-block text-white">No disponible</a>
+                              <%}%>
+                                <% if(orden.estadoNombre==='DISPONIBLE' ) {%>
+                                  <a href="#" style="width: 100%;"
+                                    class="btn btn-primary  rounded-3 btn-block text-white">Ver Evento</a>
+                                  <%}%>
+                  </div>
+
                 </div>
+
               </div>
-            </div>
-
-            <div class="col-12 col-md-6 col-lg-4">
-              <div class="card">
-                <img src="st.png" class="card-img-top" id="imgcard" alt="A Street in Europe">
-                <div class="card-body">
-                  <input hidden id="idevent" name="idevent" value="">
-                  <h5 class="card-title">Caja de donas</h5>
-                  <p class="card-text">Fecha: 28-04-2023</p>
-                  <p class="card-text">Fecha para que lo desechen: 28-04-2023 12:00</p>
-
-                  <p class="card-text">Direccion: Estado 235, Rancagua, O'Higgins </p>
-                  <p class="card-text">Estado: Reservada </p>
-                  <p class="card-text">Precio: $3500</p>
-                  <a href="#" style="width: 100%;" class="btn btn-primary  rounded-0 btn-block text-white">Reservar</a>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-12 col-md-6 col-lg-4">
-              <div class="card">
-                <img src="st.png" class="card-img-top" id="imgcard" alt="A Street in Europe">
-                <div class="card-body">
-                  <input hidden id="idevent" name="idevent" value="">
-                  <h5 class="card-title">Cafe starbucks</h5>
-                  <p class="card-text">Fecha: 27-04-2023</p>
-                  <p class="card-text">Fecha para que lo desechen: 27-04-2023 18:00</p>
-
-                  <p class="card-text">Direccion: Estado 235, Rancagua, O'Higgins </p>
-                  <p class="card-text">Estado: No disponible </p>
-                  <p class="card-text">Precio: $3500</p>
-                  <a href="#" style="width: 100%;" class="btn btn-primary  rounded-0 btn-block text-white" aria-disabled="true">Reservar</a>
-                </div>
-              </div>
-            </div>
-
+              <% }) %>
 
       </main>
+
       <!--Columna derecha PUBLICIDAD-->
       <div class="col-12 col-lg-2 mt-3">
       </div>
 
     </div>
   </div>
-
+  <script>
+    var link = document.getElementById("myLink");
+    link.classList.add("disabled");
+  </script>
 </body>
 
 </html>
