@@ -9,12 +9,12 @@ Después de clonar el repositorio, en la terminal del visualStudio deben ejecuta
 
 Luego, debemos instalar las dependencias que vamos a usar, por ahora no se estan usando todas (Si tiene el nodemon instalado globalmente, omita el nodemon)
 
-    2. npm i  express express-session mysql ejs dotenv bcryptjs nodemon
-    3. npm i multer 
+    2. npm i  express express-session mysql ejs dotenv bcryptjs nodemon uuid multer
+   
 
 Luego en la terminal, deben usar el siguiente comando para levantar el servidor (ni idea pq ese)
 
-    3. npx nodemon hhtpster -p 3000 -d ./public
+    3. npm run food
 
 Luego de eso abren en su navegador y van a buscar en la URL
 
