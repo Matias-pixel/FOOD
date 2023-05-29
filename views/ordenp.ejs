@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="custom.css">
+    <title>Publicar orden</title>
+</head>
+<body>
+    <div class="container mt-4">
+        <div class="card border-secondary">
+            <div class="card border-secondary">
+                <div class="card-header">Nuevo Registro</div>
+                <div class="card-body">
+                    <form action="saveOrden" method="POST" enctype="multipart/form-data">
+                        
+                       
+                        
+                        <div class="mb-3">
+                            <label for="events" class="form-label">Titulo de la orden</label>
+                            <input class="form-control" type="text" id="nombre" name="nombre" tabindex="1" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="events" class="form-label">Dirección</label>
+                            <input class="form-control" type="text" id="ordenDireccion" name="ordenDireccion" tabindex="2" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="events" class="form-label">Fecha para desechar</label>
+                            <input class="form-control" type="datetime-local"  id="date" name="date"  tabindex="3" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                          <label for="events" class="form-label">Precio de la orden</label>
+                          <input class="form-control" type="number" id="precio" name="precio" placeholder="$" tabindex="4" required>
+                      </div>
+
+                        <div class="mb-3">
+                            <label for="events" class="form-label">Descripción</label>
+                            <input class="form-control" type="text" id="description" name="description" tabindex="5" required>
+                        </div>
+                         
+                        <div class="mb-3">
+                          <label for="events" class="form-label">Categoría</label>
+
+                          <select class="form-select" id="categoria" name="categoria" aria-label="Defaul selext example" required> 
+                          <% results.forEach((results) => { %>
+                            <option value="<%= results.id %>"> <%= results.nombre %> </option>
+                          <% }) %>
+                        </div>
+
+                        </select>
+
+                        <!--ACA VA LA IMAGEN-->
+                        <div class="mb-3">
+                            <label for="events" class="form-label">Imagen</label>
+                            <input class="form-control" type="file" id="image" name="image" tabindex="7" required>
+                        </div>   
+                        <button type="submit" class="btn btn-primary" tabindex="5">Guardar</button>
+                        <a href="/" class="btn btn-secondary">Cancelar</a>
+                        
+                        <div class="mb-3">
+                        </div>
+                        
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+    
+</body>
+</html>

@@ -70,17 +70,17 @@
                   </tr>
               </thead>
   
-              <tbody class="text-start">
+              <tbody >
                   <% results.forEach((categoria)=>{ %>
   
                       <tr>
-                          <td>
+                          <td class="text-start">
                               <%= categoria.id %>
                           </td>
-                          <td>
+                          <td class="text-start">
                               <%= categoria.nombre %>
                           </td>
-                          <td>
+                          <td class="text-start">
                               <a href="/editarCategoria/<%= categoria.id %>" class="btn btn-info"><span class="material-symbols-outlined">
                                 border_color
                                 </span></a>

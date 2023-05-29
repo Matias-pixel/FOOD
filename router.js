@@ -5,7 +5,7 @@ const conexion = require('./database/db');
 
 //RUTA PARA EL INDEX
 router.get('/', (req,res)=>{
-    conexion.query('SELECT orden.id, orden.nombre, orden.descripcion, orden.fecha, orden.direccion,orden.fechaVencimiento, orden.precio, estadoorden.nombre AS estadoNombre, usuario.nombre AS usuarioNombre, razon.nombre AS razonNombre FROM orden INNER JOIN estadoorden ON orden.estadoorden_id_fk = estadoorden.id INNER JOIN usuario ON orden.usuario_id_fk = usuario.id INNER JOIN razon ON orden.razon_id_fk = razon.id WHERE estadoorden.id != 1 ORDER BY orden.fecha ASC;', (error, results)=>{
+    conexion.query('SELECT orden.id, orden.nombre, orden.descripcion, orden.image, orden.fecha, orden.direccion,orden.fechaVencimiento, orden.precio, estadoorden.nombre AS estadoNombre, usuario.nombre AS usuarioNombre, razon.nombre AS razonNombre FROM orden INNER JOIN estadoorden ON orden.estadoorden_id_fk = estadoorden.id INNER JOIN usuario ON orden.usuario_id_fk = usuario.id INNER JOIN razon ON orden.razon_id_fk = razon.id WHERE estadoorden.id != 1 ORDER BY orden.fecha ASC;', (error, results)=>{
         if(error){
             throw error;
         }else{
@@ -18,7 +18,7 @@ router.get('/indec',  (req, res)=>{
 
     const names = req.query.names;
     
-    conexion.query('SELECT orden.id, orden.nombre, orden.descripcion, orden.fecha, orden.direccion,orden.fechaVencimiento, orden.precio, estadoorden.nombre AS estadoNombre, usuario.nombre AS usuarioNombre, razon.nombre AS razonNombre FROM orden INNER JOIN estadoorden ON orden.estadoorden_id_fk = estadoorden.id INNER JOIN usuario ON orden.usuario_id_fk = usuario.id INNER JOIN razon ON orden.razon_id_fk = razon.id WHERE estadoorden.id != 1 AND orden.nombre = ? ORDER BY orden.fecha ASC;',[names], (error, results)=>{
+    conexion.query('SELECT orden.id, orden.nombre, orden.descripcion,orden.image, orden.fecha, orden.direccion,orden.fechaVencimiento, orden.precio, estadoorden.nombre AS estadoNombre, usuario.nombre AS usuarioNombre, razon.nombre AS razonNombre FROM orden INNER JOIN estadoorden ON orden.estadoorden_id_fk = estadoorden.id INNER JOIN usuario ON orden.usuario_id_fk = usuario.id INNER JOIN razon ON orden.razon_id_fk = razon.id WHERE estadoorden.id != 1 AND orden.nombre = ? ORDER BY orden.fecha ASC;',[names], (error, results)=>{
 
         if (error){
             console.log(' NADADANDNANDANANDADNADNANDNA');
@@ -41,7 +41,7 @@ router.get('/login', (req,res)=>{
 //RUTA PARA VER PRODUCTO
 router.get('/detalle/:id', (req,res)=>{
     const id = req.params.id;
-    conexion.query('SELECT orden.id, orden.nombre, orden.descripcion, orden.fecha, orden.direccion,orden.fechaVencimiento, orden.precio, estadoorden.nombre AS estadoNombre, usuario.nombre AS usuarioNombre, razon.nombre AS razonNombre FROM orden INNER JOIN estadoorden ON orden.estadoorden_id_fk = estadoorden.id INNER JOIN usuario ON orden.usuario_id_fk = usuario.id INNER JOIN razon ON orden.razon_id_fk = razon.id WHERE estadoorden.id != 1  AND orden.id = ? ORDER BY orden.fecha ASC;',[id], (error, results)=>{
+    conexion.query('SELECT orden.id, orden.nombre, orden.descripcion, orden.image, orden.fecha, orden.direccion,orden.fechaVencimiento, orden.precio, estadoorden.nombre AS estadoNombre, usuario.nombre AS usuarioNombre, razon.nombre AS razonNombre FROM orden INNER JOIN estadoorden ON orden.estadoorden_id_fk = estadoorden.id INNER JOIN usuario ON orden.usuario_id_fk = usuario.id INNER JOIN razon ON orden.razon_id_fk = razon.id WHERE estadoorden.id != 1  AND orden.id = ? ORDER BY orden.fecha ASC;',[id], (error, results)=>{
         if(error){
             throw error;
         }else{
@@ -141,7 +141,7 @@ router.get('/habilitarCategoria/:id', (req, res)=>{
 
 //RUTA PARA VER USUARIOS
 router.get('/usuario', (req,res)=>{
-    conexion.query('SELECT * FROM usuario WHERE estadoUsuario_id_fk = 1', (error, results)=>{
+    conexion.query('SELECT usuario.id, usuario.nombre, usuario.apellido, usuario.correo, usuario.pass, tipousuario.nombre as tipoNombre, estadousuario.nombre as estadoNombre FROM usuario INNER JOIN estadousuario ON estadousuario.id = usuario.estadoUsuario_id_fk INNER JOIN tipousuario ON tipousuario.id = usuario.tipoUsuario_id_fk WHERE usuario.estadoUsuario_id_fk !=2 AND tipoUsuario_id_fk != 1 ORDER BY usuario.id ASC', (error, results)=>{
         if(error){
 
         }else{
@@ -190,6 +190,8 @@ router.get('/editarUsuario/:id', (req, res)=>{
         }
     })
 })
+
+
 //RUTA PARA ELIMINAR USUARIO
 router.get('/deleteUsuario/:id', (req, res)=>{
     const id = req.params.id;
@@ -284,6 +286,21 @@ router.get('/habilitarTipoUsuario/:id', (req, res)=>{
     })
 })
 
+//RUTA PARA SUBIR ORDEN EN CRUDO
+
+router.get('/ordenFull', (req, res)=>{
+    
+    conexion.query('SELECT * FROM categoria WHERE estadoCategoria_id_fk = 1', (error, results) => {
+
+        if (error){
+            throw error;            
+        }else{
+            res.render('ordenp', {results: results});
+        }
+    });
+        
+    
+})
 
 
 
@@ -302,6 +319,7 @@ router.post('/createUsuario',crud.createUsuario);
 router.post('/createTipoUsuario',crud.createTipoUsuario);
 router.post('/editarTipoUsuario',crud.editarTipoUsuario);
 router.post('/editarUsuario', crud.editarUsuario);
+router.post('/saveOrden',crud.saveOrden);
 
 //IMPORTAR DE CRUD
 

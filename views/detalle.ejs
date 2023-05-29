@@ -40,13 +40,14 @@
           </a>
         </div>
       </nav>
-      <br>
+      <br> 
       <% if(orden){ %>
         <div class="container-fluid">
           <h1 class="text-center">Detalles del pedido</h1>
             <div class="row">
                 <div class="col-lg-6" >
-                    <img src="../public/img/st.png" alt="Hola">
+                    <img src="uploads/ <%= orden.image %>" alt="Imagen inexistenteee">
+                    <h1><%= orden.image %></h1>
                 </div>
                 <div class="col-lg-6" >
                   <div class="card mb-3 mt-2" id="cardwide">

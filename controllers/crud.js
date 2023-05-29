@@ -251,6 +251,34 @@ exports.editarTipoUsuario = (req, res) => {
     
 }
 
+exports.saveOrden = (req, res)=>{
+    const nombre = req.body.nombre;
+    const descripcion = req.body.description;
+    const imagen= req.file.filename;
+    const fecha = new Date();
+    const fechaV = req.body.date;
+    const direccion = req.body.ordenDireccion;
+    const precio = req.body.precio;
+    const categoria = req.body.categoria
+    const estado = 2;
+    //por ahora
+    const usuario = 1;
+    //por ahora
+    const razon = 1;
+
+    conexion.query('INSERT INTO orden SET ?', {nombre:nombre, descripcion: descripcion, image: imagen, fecha:fecha, fechaVencimiento: fechaV, direccion:direccion,precio:precio,categoria_id_fk:categoria,estadoorden_id_fk:estado,usuario_id_fk:usuario,razon_id_fk:razon}, (error, results)=>{
+        if(error){
+            console.log(error)
+        
+        }else{
+            res.redirect('/');
+          
+        }
+    });
+
+
+}
+
 
 
 

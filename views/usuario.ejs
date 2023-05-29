@@ -87,7 +87,7 @@
                             <%= tipo.correo %>
                         </td>
                         <td>
-                            <%= tipo.tiponombre %>
+                            <%= tipo.tipoNombre %>
                         </td>
                         <td>
                             <a href="/editarUsuario/<%= tipo.id %>" class="btn btn-info"><span class="material-symbols-outlined">
@@ -175,7 +175,7 @@
   function confirmar(id, nombre) {
       Swal.fire({
           title: 'Atencion!',
-          text: "¿Estas seguro de querer eliminar el tipo usuario " + nombre + "?",
+          text: "¿Estas seguro de querer eliminar al usuario " + nombre + "?",
           icon: 'warning',
           showCancelButton: true,
           confirmButtonColor: '#3085d6',
