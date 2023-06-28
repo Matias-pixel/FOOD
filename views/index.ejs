@@ -29,16 +29,28 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="/">ORDENES</a>
           </li>
+          <% if(user){ %>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/subirOrden">SUBIR ORDEN</a>
+              
+            </li>
+
+          <% } %>
 
 
         </ul>
       </div>
     </div>
     <div>
-
-      <a class="navbar-brand" href="/login">
-        Iniciar Sesión
-      </a>
+      <% if(user){ %>
+        <a class="navbar-brand" href="/adios">
+          Cerrar sesion
+        </a>
+        <%}else{ %>
+          <a class="navbar-brand" href="/login">
+            Iniciar Sesión
+          </a>
+          <%} %>
     </div>
   </nav>
 
@@ -53,14 +65,11 @@
         <hr>
         <!--INICIO DE LOS BOTONES DE CATEGORIA-->
         <div class="d-grid gap-2 col-12 mx-auto pt-5">
-
-          <a class="btn btn-primary rounded-0 text-white" type="button" href="#">Masas</a>
-          <a class="btn btn-primary rounded-0 text-white" type="button" href="#">Bebestibles</a>
-          <a class="btn btn-primary rounded-0 text-white" type="button" href="#">Carnes</a>
-          <a class="btn btn-primary rounded-0 text-white" type="button" href="#">Embutidos</a>
-          <a class="btn btn-primary rounded-0 text-white" type="button" href="#">Variados</a>
-
-
+          <a class="btn btn-primary rounded-0 text-white" type="button" href="/indes/1">Masas</a>
+          <a class="btn btn-primary rounded-0 text-white" type="button" href="/indes/2">Bebestibles</a>
+          <a class="btn btn-primary rounded-0 text-white" type="button" href="/indes/3">Carnes</a>
+          <a class="btn btn-primary rounded-0 text-white" type="button" href="/indes/5">Embutidos</a>
+          <a class="btn btn-primary rounded-0 text-white" type="button" href="/indes/6">Variados</a>
         </div>
 
 

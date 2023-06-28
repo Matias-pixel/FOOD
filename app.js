@@ -1,18 +1,10 @@
-//const express = require('express');
-//const app = express();
 
-//INVOCAR AL MOTOR DE PLANTILLA EJS//
-//app.set('view engine', 'ejs');
-
-//app.use(express.urlencoded({extended:false}));
-//app.use(express(express.json));
-
-//app.use('/',require('./router'));
 const express = require('express');
 const { json } = require('express');
 const path = require('path');
 const multer = require ('multer');
 const { v4: uuidv4 } = require('uuid');
+const session = require('express-session');
 
 const app = express();
 
@@ -36,6 +28,13 @@ app.use(multer({
     storage,
     dest: path.join(__dirname, 'public/uploads')
 }).single('image'));
+
+//SESIONES
+app.use(session({
+    secret: "secret",
+    resave: true,
+    saveUninitialized: true
+}));
 
 //Permitir ver imagenes señores
 app.use(express.static(path.join(__dirname,'public')));

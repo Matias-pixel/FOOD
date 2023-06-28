@@ -9,11 +9,12 @@ router.get('/', (req,res)=>{
         if(error){
             throw error;
         }else{
-            res.render('index', {results:results})
+            res.render('index', {results:results, user: req.session.user})
         }
     })
 });
 
+//RUTA PARA BUSCADOR
 router.get('/indec',  (req, res)=>{
 
     const names = req.query.names;
@@ -29,13 +30,31 @@ router.get('/indec',  (req, res)=>{
         }
     });
 
+    
+
+})
+
+//RUTA PARA CATEGORIAS
+
+router.get('/indes/:categoria', (req,res)=>{
+    const categoria = req.params.categoria;
+
+    conexion.query('SELECT orden.id, orden.nombre, orden.descripcion,orden.image, orden.fecha, orden.direccion,orden.fechaVencimiento, orden.precio, estadoorden.nombre AS estadoNombre, usuario.nombre AS usuarioNombre, razon.nombre AS razonNombre FROM orden INNER JOIN estadoorden ON orden.estadoorden_id_fk = estadoorden.id INNER JOIN usuario ON orden.usuario_id_fk = usuario.id INNER JOIN razon ON orden.razon_id_fk = razon.id WHERE estadoorden.id != 1 AND orden.categoria_id_fk = ? ORDER BY orden.fecha ASC;',[categoria], (error, results)=>{
+        if(error){
+            throw error;
+        }else{
+            res.render('index', {results:results, user: req.session.user});
+            console.log('ACAAAAAAAAAAAAAAAA',req.session.user);
+        }
+    })
+
 })
 
 
 
 
 router.get('/login', (req,res)=>{
-    res.render('login');
+    res.render('login', {user: req.session.user});
 });
 
 //RUTA PARA VER PRODUCTO
@@ -45,12 +64,12 @@ router.get('/detalle/:id', (req,res)=>{
         if(error){
             throw error;
         }else{
-            res.render('detalle', {orden:results[0]})
+            res.render('detalle', {orden:results[0], user : req.session.user})
         }
     })
 });
 router.get('/detalle', (req,res)=>{
-    res.render('detalle');
+    res.render('detalle', {user: req.session.user});
 });
 
 
@@ -78,14 +97,14 @@ router.get('/categoria', (req,res)=>{
         if(error){
             throw error;
         }else{
-            res.render('categorias', {results:results});
+            res.render('categorias', {results:results, user:req.session.user});
         }
     })
 })
 
 //RUTA PARA INGRESAR CATEGORIA
 router.get('/ingresarCategoria', (req,res)=>{
-    res.render('nuevaCategoria');
+    res.render('nuevaCategoria', {user: req.session.user});
 })
 
 //RUTA PARA EDITAR CATEGORIA
@@ -96,7 +115,7 @@ router.get('/editarCategoria/:id', (req, res)=>{
         if(error){
             throw error;
         }else{
-            res.render('editarCategoria', {tipo:results[0]});
+            res.render('editarCategoria', {tipo:results[0],user: req.session.user});
         }
     })
 }) 
@@ -109,7 +128,7 @@ router.get('/deshabilitarCategoria/:id', (req, res)=>{
         if(error){
             throw error;
         }else{
-            res.redirect('/categoria')
+            res.redirect('/categoria',{user: req.session.user})
         }
     })
 })
@@ -122,7 +141,7 @@ router.get('/categoriaDes', (req,res)=>{
         if(error){
             throw error;
         }else{
-            res.render('categoriasDes', {results:results});
+            res.render('categoriasDes', {results:results, user: req.session.user});
         }
     })
 })
@@ -134,7 +153,7 @@ router.get('/habilitarCategoria/:id', (req, res)=>{
         if(error){
             throw error;
         }else{
-            res.redirect('/categoria')
+            res.redirect('/categoria', {user: req.session.user})
         }
     })
 })
@@ -145,7 +164,7 @@ router.get('/usuario', (req,res)=>{
         if(error){
 
         }else{
-            res.render('usuario', {results:results})
+            res.render('usuario', {results:results, user: req.session.user})
         }
     })
 })
@@ -156,7 +175,7 @@ router.get('/nuevoUsuario',(req,res)=>{
         if(error){
             throw error;
         }else{
-            res.render('nuevoUsuario', {results:results});
+            res.render('nuevoUsuario', {results:results, user: req.session.user});
         }
     })
 })
@@ -168,7 +187,7 @@ router.get('/tipoUsuario', (req,res)=>{
         if(error){
             throw error;
         }else{
-            res.render('tipoUsuario', {results:results});
+            res.render('tipoUsuario', {results:results, user: req.session.user});
         }
     })
 })
@@ -184,7 +203,7 @@ router.get('/editarUsuario/:id', (req, res)=>{
                 if(error){
                     throw error;
                 }else{
-                    res.render('editarUsuario',{results:result[0],tipox:tipox})
+                    res.render('editarUsuario',{results:result[0],tipox:tipox, user: req.session.user})
                 }
             })
         }
@@ -199,7 +218,7 @@ router.get('/deleteUsuario/:id', (req, res)=>{
         if(error){
             throw error;
         }else{
-            res.redirect('/usuario')
+            res.redirect('/usuario',{user: req.session.user})
         }
     })
 })
@@ -212,7 +231,7 @@ router.get('/UsuarioDes', (req,res)=>{
         if(error){
             throw error;
         }else{
-            res.render('usuariosDes', {results:results});
+            res.render('usuariosDes', {results:results,user: req.session.user});
         }
     })
 })
@@ -224,7 +243,7 @@ router.get('/HabilitarUsuario/:id', (req, res)=>{
         if(error){
             throw error;
         }else{
-            res.redirect('/usuario')
+            res.redirect('/usuario',{user: req.session.user})
         }
     })
 })
@@ -232,7 +251,7 @@ router.get('/HabilitarUsuario/:id', (req, res)=>{
 //RUTA PARA CREAR TIPO DE USUARIO
 
 router.get('/nuevoTipoUsuario', (req,res)=>{
-    res.render('nuevoTipoUsuario');
+    res.render('nuevoTipoUsuario', {user: req.session.user});
 });
 
 //RUTA PARA EDITAR TIPO DE USUARIO 
@@ -244,7 +263,7 @@ router.get('/editarTipoUsuario/:id', (req, res)=>{
         if(error){
             throw error;
         }else{
-            res.render('editarTipoUsuario', {tipo:results[0]});
+            res.render('editarTipoUsuario', {tipo:results[0], user: req.session.user});
         }
     })
 })
@@ -257,7 +276,7 @@ router.get('/tipoUsuarioDes', (req,res)=>{
         if(error){
             throw error;
         }else{
-            res.render('tipoUsuarioDes', {results:results});
+            res.render('tipoUsuarioDes', {results:results, user: req.session.user});
         }
     })
 })
@@ -269,7 +288,7 @@ router.get('/deleteTipoUsuario/:id', (req, res)=>{
         if(error){
             throw error;
         }else{
-            res.redirect('/tipoUsuario')
+            res.redirect('/tipoUsuario', {user: req.session.user})
         }
     })
 })
@@ -281,10 +300,12 @@ router.get('/habilitarTipoUsuario/:id', (req, res)=>{
         if(error){
             throw error;
         }else{
-            res.redirect('/tipoUsuario')
+            res.redirect('/tipoUsuario',{user: req.session.user})
         }
     })
 })
+
+
 
 //RUTA PARA SUBIR ORDEN EN CRUDO
 
@@ -295,10 +316,48 @@ router.get('/ordenFull', (req, res)=>{
         if (error){
             throw error;            
         }else{
-            res.render('ordenp', {results: results});
+            res.render('ordenp', {results: results, user: req.session.user});
         }
     });
         
+    
+})
+
+
+//RUTA PARA LOG OUT
+
+router.get('/adios',  (req, res)=>{
+
+    req.session.destroy((error) => {
+        if (error) {
+          console.log(error);
+        } else {
+          res.redirect('/'); // Redirige a la página de inicio de sesión u otra página adecuada
+        }
+    });
+
+
+})
+
+//RUTA PARA DENEGAR ACCESO
+router.get('/denegado',  (req, res)=>{
+
+    res.render('denegado');
+
+})
+
+//RUTA PARA SUBIR ORDEN
+router.get('/subirOrden', (req, res)=>{
+    conexion.query('SELECT * FROM RAZON', (error, razon)=>{
+        conexion.query('SELECT * FROM categoria WHERE estadoCategoria_id_fk = 1', (error, categoria)=>{
+            if(error){
+                throw error;
+            }else{
+                res.render('subirOrden', {categoria:categoria,razon:razon,user: req.session.user});
+            }
+        })
+    })
+    
     
 })
 

@@ -1,0 +1,149 @@
+<% if(user && user.tipoUsuario_id_fk===2){ %>
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <head>
+            <meta charset="UTF-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <link rel="preconnect" href="https://fonts.googleapis.com">
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+            <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+              
+            <link rel="stylesheet" href="custom.css">
+            <title>Subir orden</title>
+          </head>
+    </head>
+
+    <body style="background-color: #f5f5f5;">
+        <nav class="navbar navbar-light bg-primary navbar-expand-lg">
+            <div class="container-fluid">
+                <div>
+                    <span class="navbar-brand mb-0 h1">Porduct Rescue</span>
+                </div>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/">ORDENES</a>
+                        </li>
+                        <% if(user){ %>
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="/subirOrden">SUBIR ORDEN</a>
+
+                            </li>
+
+                            <% } %>
+
+
+                    </ul>
+                </div>
+            </div>
+            <div>
+                <% if(user){ %>
+                    <a class="navbar-brand" href="/adios">
+                        Cerrar sesion
+                    </a>
+                    <%}else{ %>
+                        <a class="navbar-brand" href="/login">
+                            Iniciar Sesión
+                        </a>
+                        <%} %>
+            </div>
+        </nav>
+<br>
+        <% if(user){ %>
+            <h1 class="text-center">Bienvenido <%= user.nombre %></h1>
+
+         <%} %>
+
+
+        <!-- COMIENZO DEL FORMULARIO -->
+        <div class="container mt-4">
+            <div class="card border-secondary">
+                <div class="card border-secondary">
+                    <div class="card-header">Nueva orden</div>
+                    <div class="card-body">
+                        <form action="/saveOrden" method="POST" enctype="multipart/form-data">
+                            <input value="<%= user.id %>" type="text" id="id_usuario" name="id_usuario"
+                                hidden>
+
+                            <div class="mb-3">
+                                <label for="nombre" class="form-label">Nombre de la orden</label>
+                                <input class="form-control" type="text" id="nombre" name="nombre" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="events" class="form-label">Descripción </label>
+                                <textarea style="resize: none;" maxlength="300" class="form-control" placeholder="Descripcion" id="descripcion" name="descripcion" required></textarea>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="events" class="form-label">Imagen del la orden</label>
+                                <input class="form-control" type="file" id="image" name="image" tabindex="1" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="events" class="form-label">Fecha para desechar</label>
+                                <input class="form-control" type="datetime-local"  id="fechV" name="fechV"  tabindex="3" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="events" class="form-label">Direccion</label>
+                                <input class="form-control" type="text" id="direccion" name="direccion" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="precio" class="form-label">Precio</label>
+                                <input class="form-control" type="number" id="precio" name="precio" min="0" required>
+                            </div>
+                            <label for="precio" class="form-label">Categoria:</label>
+                            <select class="form-select form-control-lg"  id="categoria" name="categoria" required>
+                                <option selected> Seleccione una categoria para la orden: </option>
+                                <% categoria.forEach((cat)=>{ %>
+                                    <option value="<%= cat.id %>" > <%= cat.nombre %> </option>
+                                <%})%>
+                            </select>
+                            <label for="razon" class="form-label">Razon:</label>
+                            <select class="form-select form-control-lg"  id="razon" name="razon" required>
+                            
+                                <option selected> Seleccione la razon: </option>
+                                <% razon.forEach((ra)=>{ %>
+                                    <option value="<%= ra.id %>" > <%= ra.nombre %> </option>
+                                <%})%>
+                            </select>
+<br>
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                            <a href="/" class="btn btn-secondary">Cancelar</a>
+
+                            <div class="mb-3">
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+
+
+        <!-- FIN DEL FORMULARIO -->
+
+
+
+    </body>
+
+    </html>
+
+    <%}else{ %>
+        <script>
+            window.onload = function () {
+                window.location.href = "denegado";
+            };
+        </script>
+        <%} %>

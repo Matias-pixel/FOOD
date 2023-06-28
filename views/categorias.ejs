@@ -1,3 +1,6 @@
+<% if(user && user.tipoUsuario_id_fk === 1){ %>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -42,17 +45,19 @@
     </div>
     <div>
 
-      <a class="navbar-brand" href="/login">
+      <a class="navbar-brand" href="/adios">
         CERRAR SESIÓN
       </a>
     </div>
   </nav>
   <br>
+
     
 
 
       <!--INICIO DE LISTA CATEGORIAS-->
       <h1 class="text-center">CATEGORIAS</h1>
+
       <br>
     
       <div class="container-fluid">
@@ -60,7 +65,7 @@
           <a href="/ingresarCategoria" class="btn btn-primary" id="submit-btn">Añadir nueva categoria</a>
           <a href="/categoriaDes" class="btn btn-primary" id="submit-btn">Categorias deshabilitadas</a>
           <br><br>
-  
+
           <table id="table" class="table table-striped text-center mt-4">
               <thead style="background-color:#00b388; color: black;">
                   <tr>
@@ -81,10 +86,8 @@
                               <%= categoria.nombre %>
                           </td>
                           <td class="text-start">
-                              <a href="/editarCategoria/<%= categoria.id %>" class="btn btn-info"><span class="material-symbols-outlined">
-                                border_color
-                                </span></a>
-                                <a onclick="confirmar(<%= categoria.id %>, '<%= categoria.nombre %>')" class="btn btn-danger"><span class="material-symbols-outlined">delete</span></a>
+                              <a href="/editarCategoria/<%= categoria.id %>" class="btn btn-info"><span class="material-symbols-outlined">border_color</span></a>
+                              <a onclick="confirmar(<%= categoria.id %>, '<%= categoria.nombre %>')" class="btn btn-danger"><span class="material-symbols-outlined">delete</span></a>
                           </td>
   
                       </tr>
@@ -93,6 +96,10 @@
   
           </table>
       </div>
+      <% if(user){ %>
+          <h1><%= user.id %></h1>
+        <%}%> 
+      
 
        <!--CDN de la datatables-->
       <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -185,6 +192,15 @@
       })
   }
 </script>
+
     
 </body>
 </html>
+<% }else{ %>
+  <script>
+    window.onload = function() {
+        window.location.href = "denegado";
+    };
+  </script>
+
+  <% } %>

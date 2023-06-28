@@ -28,10 +28,16 @@
       </div>
     </div>
     <div>
+      <%if(user){ %>
+        <a class="navbar-brand" href="/adios">
+          Cerrar sesion
+        </a>
+        <% }else{%>
+          <a class="navbar-brand" href="/login">
+            Iniciar sesion
+          </a>
+          <% } %>
 
-      <a class="navbar-brand" href="/login">
-        Iniciar Sesión
-      </a>
     </div>
   </nav>
 
@@ -41,7 +47,7 @@
     <!--COMIENZO DEL FORMULARIO LOGIN-->
     <div class="d-flex justify-content-center align-items-center vh-100" style="background-color: hsl(0, 0%, 96%)">
 
-        <form action="login" method="post">
+        <form action="/login" method="post">
         <div class="bg-white p-5 rounded-5 text-secondary shadow" style="width: 25rem">
             <div class="d-flex justify-content-center">
               <img src="login-icon.svg" alt="login-icon" style="height: 7rem" />
