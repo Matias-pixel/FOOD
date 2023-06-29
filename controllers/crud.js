@@ -288,24 +288,24 @@ exports.saveOrden = (req, res) => {
     const fechaV = req.body.fechV;
     const direccion = req.body.direccion;
     const precio = req.body.precio;
-    const categoria = req.body.categoria;
+    const cate = req.body.categoria;
     const estado = 2;
-    //por ahora
+
     const usuario = req.session.user.id;
-    //por ahora
-    const razon = req.body.razon;
+
+    const raz = req.body.razon;
 
     conexion.query('SELECT * FROM categoria WHERE estadoCategoria_id_fk = 1', (error, categoria)=>{
         conexion.query('SELECT * FROM razon', (error, razon)=>{
-            conexion.query('INSERT INTO orden SET ?', { nombre: nombre, descripcion: descripcion, image: imagen, fecha: fecha, fechaVencimiento: fechaV, direccion: direccion, precio: precio, categoria_id_fk: categoria, estadoorden_id_fk: estado, usuario_id_fk: usuario, razon_id_fk: razon }, (error, results) => {
+            conexion.query('INSERT INTO orden SET ?', { nombre: nombre, descripcion: descripcion, image: imagen, fecha: fecha, fechaVencimiento: fechaV, direccion: direccion, precio: precio, categoria_id_fk: cate, estadoorden_id_fk: estado, usuario_id_fk: usuario, razon_id_fk: raz }, (error, results) => {
                 if (error) {
                     console.log(error);
                 } else {
                     res.render('subirOrden', {
                         alert: true,
                         alertTitle: 'Todo correcto',
-                        alertMessage: 'Tipo de usuario creado correctamente!',
-                        alertIcon: 'succes',
+                        alertMessage: 'Orden subida exitosamente!',
+                        alertIcon: 'success',
                         showConfirmButton: false,
                         timer: 1500,
                         ruta: '/',

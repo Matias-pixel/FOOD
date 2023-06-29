@@ -20,7 +20,7 @@
         <nav class="navbar navbar-light bg-primary navbar-expand-lg">
             <div class="container-fluid">
                 <div>
-                    <span class="navbar-brand mb-0 h1">Porduct Rescue</span>
+                    <span class="navbar-brand mb-0 h1">Product Rescue</span>
                 </div>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -90,7 +90,7 @@
 
                             <div class="mb-3">
                                 <label for="events" class="form-label">Fecha para desechar</label>
-                                <input class="form-control" type="datetime-local"  id="fechV" name="fechV"  tabindex="3" required>
+                                <input class="form-control" type="datetime-local"  id="fechV" name="fechV" required>
                             </div>
 
                             <div class="mb-3">
@@ -106,7 +106,7 @@
                             <select class="form-select form-control-lg"  id="categoria" name="categoria" required>
                                 <option selected> Seleccione una categoria para la orden: </option>
                                 <% categoria.forEach((cat)=>{ %>
-                                    <option value="<%= cat.id %>" > <%= cat.nombre %> </option>
+                                    <option value="<%= cat.id %>"> <%= cat.nombre %> </option>
                                 <%})%>
                             </select>
                             <label for="razon" class="form-label">Razon:</label>
@@ -114,7 +114,7 @@
                             
                                 <option selected> Seleccione la razon: </option>
                                 <% razon.forEach((ra)=>{ %>
-                                    <option value="<%= ra.id %>" > <%= ra.nombre %> </option>
+                                    <option value="<%= ra.id %>"> <%= ra.nombre %> </option>
                                 <%})%>
                             </select>
 <br>
@@ -133,11 +133,28 @@
 
 
         <!-- FIN DEL FORMULARIO -->
-
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.5/dist/sweetalert2.all.min.js"></script>
+        <% if(typeof alert != "undefined"){ %>
+            <script>
+                Swal.fire({
+                    title: '<%= alertTitle%>',
+                    text: '<%= alertMessage%>',
+                    icon: '<%= alertIcon%>',
+                    showConfirmButton: <%= showConfirmButton%> ,
+                    timer: <%= timer%>
+                }).then(()=>{
+                    window.location='/<%= ruta%>'
+                })
+            </script>
+        <% } %>
+        <script>
+            var inputFecha = document.getElementById('fechV');
+            var fechaActual = new Date().toISOString().slice(0, 16);
+            inputFecha.setAttribute('min', fechaActual);
+        </script>
 
 
     </body>
-
     </html>
 
     <%}else{ %>

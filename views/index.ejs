@@ -17,7 +17,7 @@
   <nav class="navbar navbar-light bg-primary navbar-expand-lg">
     <div class="container-fluid">
       <div>
-        <span class="navbar-brand mb-0 h1">Porduct Rescue</span>
+        <span class="navbar-brand mb-0 h1">Product Rescue</span>
       </div>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,6 +32,10 @@
           <% if(user){ %>
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="/subirOrden">SUBIR ORDEN</a>
+              
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">Mis ordenes subidas</a>
               
             </li>
 
@@ -65,11 +69,11 @@
         <hr>
         <!--INICIO DE LOS BOTONES DE CATEGORIA-->
         <div class="d-grid gap-2 col-12 mx-auto pt-5">
-          <a class="btn btn-primary rounded-0 text-white" type="button" href="/indes/1">Masas</a>
-          <a class="btn btn-primary rounded-0 text-white" type="button" href="/indes/2">Bebestibles</a>
-          <a class="btn btn-primary rounded-0 text-white" type="button" href="/indes/3">Carnes</a>
-          <a class="btn btn-primary rounded-0 text-white" type="button" href="/indes/5">Embutidos</a>
-          <a class="btn btn-primary rounded-0 text-white" type="button" href="/indes/6">Variados</a>
+          <a class="btn btn-primary rounded-0 text-white" type="button" href="/1">Masas</a>
+          <a class="btn btn-primary rounded-0 text-white" type="button" href="/2">Bebestibles</a>
+          <a class="btn btn-primary rounded-0 text-white" type="button" href="/3">Carnes</a>
+          <a class="btn btn-primary rounded-0 text-white" type="button" href="/5">Embutidos</a>
+          <a class="btn btn-primary rounded-0 text-white" type="button" href="/6">Variados</a>
         </div>
 
 
@@ -125,7 +129,7 @@
                     <a href="#" id="myLink" style="width: 100%;"class="btn btn-danger  rounded-3 btn-block text-white">No disponible</a>
                     <%}%>
                     <% if(orden.estadoNombre==='DISPONIBLE' ) {%>
-                    <a href="/detalle/<%=orden.id%>" style="width: 100%;" class="btn btn-primary  rounded-3 btn-block text-white">Ver Evento</a>
+                    <a href="/detalle/<%=orden.id%>" style="width: 100%;" class="btn btn-primary  rounded-3 btn-block text-white">Ver orden</a>
                     <%}%>
                   </div>
 
