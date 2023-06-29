@@ -6,6 +6,7 @@ const conexion = require('./database/db');
 //RUTA PARA EL INDEX
 router.get('/', (req,res)=>{
     conexion.query('SELECT orden.id, orden.nombre, orden.descripcion, orden.image, orden.fecha, orden.direccion,orden.fechaVencimiento, orden.precio, estadoorden.nombre AS estadoNombre, usuario.nombre AS usuarioNombre, razon.nombre AS razonNombre FROM orden INNER JOIN estadoorden ON orden.estadoorden_id_fk = estadoorden.id INNER JOIN usuario ON orden.usuario_id_fk = usuario.id INNER JOIN razon ON orden.razon_id_fk = razon.id WHERE estadoorden.id != 1 ORDER BY orden.fecha ASC;', (error, results)=>{
+        console.log('DESDE ROUTER /', req.session.user)
         if(error){
             throw error;
         }else{
@@ -36,7 +37,7 @@ router.get('/indec',  (req, res)=>{
 
 //RUTA PARA CATEGORIAS
 
-router.get('/indes/:categoria', (req,res)=>{
+router.get('/in/:categoria', (req,res)=>{
     const categoria = req.params.categoria;
 
     conexion.query('SELECT orden.id, orden.nombre, orden.descripcion,orden.image, orden.fecha, orden.direccion,orden.fechaVencimiento, orden.precio, estadoorden.nombre AS estadoNombre, usuario.nombre AS usuarioNombre, razon.nombre AS razonNombre FROM orden INNER JOIN estadoorden ON orden.estadoorden_id_fk = estadoorden.id INNER JOIN usuario ON orden.usuario_id_fk = usuario.id INNER JOIN razon ON orden.razon_id_fk = razon.id WHERE estadoorden.id != 1 AND orden.categoria_id_fk = ? ORDER BY orden.fecha ASC;',[categoria], (error, results)=>{
@@ -54,6 +55,7 @@ router.get('/indes/:categoria', (req,res)=>{
 
 
 router.get('/login', (req,res)=>{
+    
     res.render('login', {user: req.session.user});
 });
 
@@ -361,6 +363,40 @@ router.get('/subirOrden', (req, res)=>{
     
 })
 
+//RUTA PARA VER MIS ORDENES
+
+router.get('/misOrdenes', (req, res)=>{
+    const id_usuario = req.session.user.id;
+
+    console.log('ACAAAAAAAAAAAAA id usuario: ',req.session.user.id);
+    conexion.query('SELECT orden.id, orden.categoria_id_fk, orden.razon_id_fk, orden.nombre, orden.descripcion, orden.image, orden.fecha, orden.fechaVencimiento, orden.direccion, orden.precio, categoria.nombre as nombreCategoria, estadoorden.nombre as nombreEstado FROM orden INNER JOIN categoria ON categoria.id = orden.categoria_id_fk INNER JOIN estadoorden ON estadoorden.id = orden.estadoorden_id_fk WHERE orden.usuario_id_fk = ?;',[id_usuario], (error, results)=>{
+        if(error){
+            throw error;
+        }else{
+            res.render('misOrdenes', { results: results, user:req.session.user})
+        }
+    })
+})
+
+//RUTA PARA EDITAR ORDEN
+
+router.get('/editarOrden/:numero', (req,res)=>{
+    const id = req.params.numero;
+    conexion.query('SELECT * FROM razon',(error, razon)=>{
+        conexion.query('SELECT * FROM categoria',(error, categoria)=>{
+            conexion.query('SELECT * FROM orden WHERE id = ? and estadoorden_id_fk != 1',[id], (error, results)=>{
+                if(error){
+                    throw error;
+                }else{
+                    res.render('editarOrden', {results:results[0],categoria:categoria,razon:razon, user: req.session.user})
+                }
+            })
+        })
+    })
+
+
+})
+
 
 
 
@@ -379,6 +415,7 @@ router.post('/createTipoUsuario',crud.createTipoUsuario);
 router.post('/editarTipoUsuario',crud.editarTipoUsuario);
 router.post('/editarUsuario', crud.editarUsuario);
 router.post('/saveOrden',crud.saveOrden);
+router.post('/editOrden',crud.editOrden);
 
 //IMPORTAR DE CRUD
 

@@ -92,7 +92,7 @@ exports.login = (req, res) => {
                             alertIcon: 'error',
                             showConfirmButton: true,
                             timer: false,
-                            ruta: '',
+                            ruta: 'login',
                         });
                     }
                 }
@@ -116,7 +116,7 @@ exports.createCategoria = (req, res) => {
                 alert: true,
                 alertTitle: 'Todo correcto',
                 alertMessage: 'Categoria ingresada correctamente!',
-                alertIcon: 'succes',
+                alertIcon: 'success',
                 showConfirmButton: false,
                 timer: 1500,
                 ruta: 'categoria'
@@ -143,7 +143,7 @@ exports.editarCategoria = (req, res) => {
                         alert: true,
                         alertTitle: 'Todo correcto',
                         alertMessage: 'Categoria actualizada correctamente!',
-                        alertIcon: 'succes',
+                        alertIcon: 'success',
                         showConfirmButton: false,
                         timer: 1500,
                         ruta: 'categoria',
@@ -238,7 +238,7 @@ exports.createTipoUsuario = (req, res) => {
                 alert: true,
                 alertTitle: 'Todo correcto',
                 alertMessage: 'Tipo de usuario creado correctamente!',
-                alertIcon: 'succes',
+                alertIcon: 'success',
                 showConfirmButton: false,
                 timer: 1500,
                 ruta: 'tipoUsuario',
@@ -265,7 +265,7 @@ exports.editarTipoUsuario = (req, res) => {
                         alert: true,
                         alertTitle: 'Todo correcto',
                         alertMessage: 'Tipo de usuario actualizado correctamente!',
-                        alertIcon: 'succes',
+                        alertIcon: 'success',
                         showConfirmButton: false,
                         timer: 1500,
                         ruta: 'tipoUsuario',
@@ -308,7 +308,52 @@ exports.saveOrden = (req, res) => {
                         alertIcon: 'success',
                         showConfirmButton: false,
                         timer: 1500,
-                        ruta: '/',
+                        ruta: '',
+                        results: results,
+                        categoria:categoria,
+                        razon: razon,
+                        user: (req.session.user)
+                    })
+                }
+            });
+        })
+    })
+
+    
+
+
+}
+
+exports.editOrden = (req, res) => {
+    const idOrden = req.body.idOrden;
+    const nombre = req.body.nombre;
+    const descripcion = req.body.descripcion;
+    const imagen = req.file.filename;
+    const fecha = new Date();
+    const fechaV = req.body.fechV;
+    const direccion = req.body.direccion;
+    const precio = req.body.precio;
+    const cate = req.body.categoria;
+    const estado = 2;
+
+    const usuario = req.session.user.id;
+
+    const raz = req.body.razon;
+
+    conexion.query('SELECT * FROM categoria WHERE estadoCategoria_id_fk = 1', (error, categoria)=>{
+        conexion.query('SELECT * FROM razon', (error, razon)=>{
+            conexion.query('UPDATE orden SET ? WHERE id = ?', [{ nombre: nombre, descripcion: descripcion, image: imagen, fecha: fecha, fechaVencimiento: fechaV, direccion: direccion, precio: precio, categoria_id_fk: cate, estadoorden_id_fk: estado, usuario_id_fk: usuario, razon_id_fk: raz },idOrden], (error, results) => {
+                if (error) {
+                    console.log(error);
+                } else {
+                    res.render('editarOrden', {
+                        alert: true,
+                        alertTitle: 'Todo correcto',
+                        alertMessage: 'Orden acutalizada exitosamente!',
+                        alertIcon: 'success',
+                        showConfirmButton: false,
+                        timer: 1500,
+                        ruta: 'misOrdenes',
                         results: results,
                         categoria:categoria,
                         razon: razon,
