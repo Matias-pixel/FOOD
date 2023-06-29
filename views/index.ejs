@@ -29,7 +29,7 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="/">ORDENES</a>
           </li>
-          <% if(user){ %>
+          <% if(user && user.tipoUsuario_id_fk === 2){ %>
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="/subirOrden">SUBIR ORDEN</a>
               

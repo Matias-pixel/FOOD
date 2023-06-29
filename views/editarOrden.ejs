@@ -145,6 +145,12 @@
         </script>
     <% } %>
 
+    <script>
+        var inputFecha = document.getElementById('fechV');
+        var fechaActual = new Date().toISOString().slice(0, 16);
+        inputFecha.setAttribute('min', fechaActual);
+    </script>
+
     
 </body>
 </html>

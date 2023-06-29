@@ -70,6 +70,7 @@ router.get('/detalle/:id', (req,res)=>{
         }
     })
 });
+
 router.get('/detalle', (req,res)=>{
     res.render('detalle', {user: req.session.user});
 });
@@ -369,7 +370,7 @@ router.get('/misOrdenes', (req, res)=>{
     const id_usuario = req.session.user.id;
 
     console.log('ACAAAAAAAAAAAAA id usuario: ',req.session.user.id);
-    conexion.query('SELECT orden.id, orden.categoria_id_fk, orden.razon_id_fk, orden.nombre, orden.descripcion, orden.image, orden.fecha, orden.fechaVencimiento, orden.direccion, orden.precio, categoria.nombre as nombreCategoria, estadoorden.nombre as nombreEstado FROM orden INNER JOIN categoria ON categoria.id = orden.categoria_id_fk INNER JOIN estadoorden ON estadoorden.id = orden.estadoorden_id_fk WHERE orden.usuario_id_fk = ?;',[id_usuario], (error, results)=>{
+    conexion.query('SELECT orden.id, orden.categoria_id_fk, orden.razon_id_fk, orden.nombre, orden.descripcion, orden.image, orden.fecha, orden.fechaVencimiento, orden.direccion, orden.precio, categoria.nombre as nombreCategoria, estadoorden.nombre as nombreEstado FROM orden INNER JOIN categoria ON categoria.id = orden.categoria_id_fk INNER JOIN estadoorden ON estadoorden.id = orden.estadoorden_id_fk WHERE orden.usuario_id_fk = ? AND orden.estadoorden_id_fk != 1;',[id_usuario], (error, results)=>{
         if(error){
             throw error;
         }else{
@@ -397,6 +398,46 @@ router.get('/editarOrden/:numero', (req,res)=>{
 
 })
 
+//RUTA PARA ELIMINAR orden
+
+router.get('/deleteOrden/:id', (req, res)=>{
+    const id = req.params.id;
+
+   
+    conexion.query('UPDATE orden SET estadoorden_id_fk = 1 WHERE id = ? ', [id], (error)=>{
+        if(error){
+            throw error;
+        }else{
+            res.redirect('/misOrdenes')
+        }
+    })
+})
+
+//RUTA PARA LISTAR ordenes DESHABILITADAS
+
+router.get('/ordenDes', (req,res)=>{
+    const id_usuario = req.session.user.id;
+    conexion.query('SELECT orden.id, orden.categoria_id_fk, orden.razon_id_fk, orden.nombre, orden.descripcion, orden.image, orden.fecha, orden.fechaVencimiento, orden.direccion, orden.precio, categoria.nombre as nombreCategoria, estadoorden.nombre as nombreEstado FROM orden INNER JOIN categoria ON categoria.id = orden.categoria_id_fk INNER JOIN estadoorden ON estadoorden.id = orden.estadoorden_id_fk WHERE orden.usuario_id_fk = ? AND orden.estadoorden_id_fk = 1;',[id_usuario], (error, results)=>{
+        if(error){
+            throw error;
+        }else{
+            res.render('ordenDes', { results: results, user:req.session.user})
+        }
+    })
+})
+
+router.get('/apartarOrden/:id',  (req, res)=>{
+    const id = req.params.id;
+
+    conexion.query('UPDATE orden SET estadoorden_id_fk = 3 WHERE id = ? ', [id], (error)=>{
+        if(error){
+            throw error;
+
+        }else{
+            res.redirect('/');
+        }
+    })
+})
 
 
 
